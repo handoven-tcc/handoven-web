@@ -35,10 +35,11 @@ const Estoque = () => {
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef(null);
     const dt = useRef(null);
+    const userId = localStorage.getItem('userId');
 
     useEffect(() => {
         const productService = new ProductService();
-        productService.getProductsByFamilyId(familyId).then((data) => setProducts(data));
+        productService.getProductsByFamilyId({familyId, userId}).then((data) => setProducts(data));
         document.documentElement.style.fontSize = '14px'
     }, [familyId]);
 
@@ -68,7 +69,7 @@ const Estoque = () => {
     const saveProduct = async () => {
         setSubmitted(true);
         const productService = new ProductService();
-        
+
         let _products = [...products];
         let _product = { ...product };
 
@@ -76,12 +77,12 @@ const Estoque = () => {
 
         if (product.id) {
             const index = findIndexById(product.id);
-            _products[index] = await productService.putProduct(product.id, product);
+            _products[index] = await productService.putProduct(product.id, product, userId);
             toast.current.show({ severity: "success", summary: "Successful", detail: "Produto Editado com sucesso!", life: 3000 });
         }
 
         if (!product.id) {
-            _products.unshift(await productService.postProducts(product));
+            _products.unshift(await productService.postProducts(product, {userId, familyId}));
             toast.current.show({ severity: "success", summary: "Successful", detail: "Produto Criado com sucesso!", life: 3000 });
         }
 
@@ -195,7 +196,7 @@ const Estoque = () => {
         const productService = new ProductService();
         let _products = products.filter((val) => !selectedProducts.includes(val));
 
-        selectedProducts.forEach((o) => productService.deleteProduct(o.id));
+        selectedProducts.forEach((o) => productService.deleteProduct(o.id, {userId, familyId}));
         setProducts(_products);
         setDeleteProductsDialog(false);
         setSelectedProducts(null);
@@ -384,7 +385,7 @@ const Estoque = () => {
                         <div className="field">
                             <label className="mb-3">Validade</label>
                             <Calendar id="validity" dateFormat="dd/mm/yy" value={toDate(product.validity)} onChange={(e) => onDataChange(e, "validity")} required className={classNames({ "p-invalid": submitted && !product.validity })} />
-                            {submitted && !product.validity && <small className="p-invalid">Preencha a Validade.</small>} 
+                            {submitted && !product.validity && <small className="p-invalid">Preencha a Validade.</small>}
                         </div>
                         <div className="formgrid grid">
                             <div className="field col">

@@ -22,6 +22,8 @@ const Receitas = () => {
         { label: "Nome A-Z", value: "nome" },
         { label: "Nome Z-A", value: "!nome" },
     ];
+    const familyId = localStorage.getItem('familyId')
+    const userId = localStorage.getItem('userId')
     const dialogFuncMap = {
         gourmetDialog: setGourmetDialog,
     };
@@ -37,7 +39,7 @@ const Receitas = () => {
 
     useEffect(() => {
         const _platesService = new PlatesService({});
-        _platesService.getPlates().then((data) => setDataviewValue(data));
+        _platesService.getPlates({userId, familyId}).then((data) => setDataviewValue(data));
         document.documentElement.style.fontSize = '14px'
     }, []);
 

@@ -26,11 +26,12 @@ const CadastrarUsuario = () => {
     const [passwordConfirm, setpasswordConfirm] = useState("");
     const [loading, setLoading] = useState(false);
     const familyId = localStorage.getItem("familyId");
+    const userId = localStorage.getItem("userId");
     const history = useHistory();
     const toast = useRef(null);
 
     useEffect(() => {
-        familyService.getFamilyId(familyId).then((data) => setFamilyName(data.name));
+        familyService.getFamilyId({userId, familyId}).then((data) => setFamilyName(data.name));
         document.documentElement.style.fontSize = '10px'
     }, []);
 
@@ -58,7 +59,7 @@ const CadastrarUsuario = () => {
         if (password !== passwordConfirm) {
             setLoading(false);
             return toast.current.show({ severity: "error", summary: "Mensagem de Erro", detail: "Senha diferente da Confirmação de Senha", life: 3000 });
-            
+
         }
         const requestBodyUser = {
             name: userName,
@@ -103,24 +104,24 @@ const CadastrarUsuario = () => {
                         <form className="col-12">
                             <div className="field">
                                 <span className="text-3xl p-float-label">
-                                    <InputText id="userName" 
-                                               type="text" 
-                                               value={userName} 
-                                               onChange={(event) => setUserName(event.target.value)} 
-                                               className=" text-2xl w-full py-3 " 
-                                               required 
+                                    <InputText id="userName"
+                                               type="text"
+                                               value={userName}
+                                               onChange={(event) => setUserName(event.target.value)}
+                                               className=" text-2xl w-full py-3 "
+                                               required
                                     />
                                     <label for="userName" className="text-xl">Nome Completo</label>
                                 </span>
                             </div>
                             <div className="flex field" style={{gap: '1rem'}}>
                                 <span className="mt-3 p-float-label">
-                                    <InputText id="email" 
-                                               type="text" 
-                                               value={email} 
-                                               onChange={(event) => setEmail(event.target.value)} 
-                                               className="text-3xl w-full py-2 px-3" 
-                                               required 
+                                    <InputText id="email"
+                                               type="text"
+                                               value={email}
+                                               onChange={(event) => setEmail(event.target.value)}
+                                               className="text-3xl w-full py-2 px-3"
+                                               required
                                     />
                                     <label for="email" className="text-xl">
                                         Email
@@ -133,7 +134,7 @@ const CadastrarUsuario = () => {
                                         mask="(99) 99999-9999"
                                         value={celphone}
                                         onChange={(event) => setCelphone(event.target.value)}
-                                        className="text-3xl w-full py-2 px-3" 
+                                        className="text-3xl w-full py-2 px-3"
                                         required
                                     />
                                     <label for="celphone" className="text-xl">
@@ -142,33 +143,33 @@ const CadastrarUsuario = () => {
                                 </span>
                             </div>
                             <div className="field">
-                                <Calendar id="birthDate" 
-                                            value={birthDate} 
+                                <Calendar id="birthDate"
+                                            value={birthDate}
                                             style={{ width: "100%", height: "4rem", marginTop: '1rem' }}
-                                            onChange={(event) => setBirthDate(event.value)} 
+                                            onChange={(event) => setBirthDate(event.value)}
                                             inputClassName={'text-xl w-full py-3'}
                                             placeholder="Data de nascimento"
-                                            required 
+                                            required
                                 />
                             </div>
                             <div className="field flex" style={{gap: '1rem'}}>
                                 <span className="mt-3 text-3xl p-float-label">
-                                    <Password id="password" 
-                                              value={password} 
-                                              onChange={(event) => setPassword(event.target.value)} 
-                                              inputClassName="text-3xl w-full py-2 px-3" 
-                                              feedback={false} 
-                                              required 
+                                    <Password id="password"
+                                              value={password}
+                                              onChange={(event) => setPassword(event.target.value)}
+                                              inputClassName="text-3xl w-full py-2 px-3"
+                                              feedback={false}
+                                              required
                                     />
                                     <label for="password" className="text-xl">Senha</label>
                                 </span>
                                 <span className="mt-3 text-3xl p-float-label">
-                                    <Password id="passwordConfirm" 
+                                    <Password id="passwordConfirm"
                                               value={passwordConfirm}
-                                              onChange={(e) => setpasswordConfirm(e.target.value)} 
-                                              inputClassName="text-3xl w-full py-2 px-3" 
-                                              feedback={false} 
-                                              required 
+                                              onChange={(e) => setpasswordConfirm(e.target.value)}
+                                              inputClassName="text-3xl w-full py-2 px-3"
+                                              feedback={false}
+                                              required
                                     />
                                     <label for="passwordConfirm" className="text-xl">Confirmação de Senha</label>
                                 </span>

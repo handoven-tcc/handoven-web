@@ -17,8 +17,8 @@ export const GoumetDialog = (props) => {
     }
 
     const wizardItems = [
-        { label: "Detalhes"},
-        { label: "Preparo"},
+        { label: "Detalhes" },
+        { label: "Preparo" },
     ];
 
     const productDialogFooter = () => {
@@ -34,35 +34,35 @@ export const GoumetDialog = (props) => {
                     </div>
                 </div>
                 {activeIndex === 0
-                ?
-                  (<div>
-                    {plates && (
-                        <>
-                            <h3>{nome[props.index]}</h3>
-                            <h5>{titleIngredient[props.index]}</h5>
-                            <ul>
-                                {ingredients[props.index].map((ingredient) => (
-                                    <li>{ingredient}</li>
-                                ))}
-                            </ul>
-                        </>
-                    )}
-                  </div>)
-                :
-                  (<div>
-                    {plates && (
-                        <>
-                            <h3>{nome[props.index]}</h3>
-                            <h5>{titleModoDePreparo[props.index]}</h5>
-                            <ul>
-                                {preparo[props.index].map((preparo) => (
-                                    <li>{preparo}</li>
-                                    
-                                ))}
-                            </ul>
-                        </>
-                    )}
-                  </div>)
+                    ?
+                    (<div>
+                        {plates && (
+                            <>
+                                <h3>{nome[props.index]}</h3>
+                                <h5>{titleIngredient[props.index]}</h5>
+                                <ul>
+                                    {ingredients[props.index].map((ingredient) => (
+                                        <li>{ingredient}</li>
+                                    ))}
+                                </ul>
+                            </>
+                        )}
+                    </div>)
+                    :
+                    (<div>
+                        {plates && (
+                            <>
+                                <h3>{nome[props.index]}</h3>
+                                <h5>{titleModoDePreparo[props.index]}</h5>
+                                <ul>
+                                    {preparo[props.index].map((preparo) => (
+                                        <li>{preparo}</li>
+
+                                    ))}
+                                </ul>
+                            </>
+                        )}
+                    </div>)
                 }
             </Dialog>
         </div>

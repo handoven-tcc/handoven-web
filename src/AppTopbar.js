@@ -7,12 +7,10 @@ import { Image } from "primereact/image";
 import { NavLink, useHistory } from "react-router-dom";
 import { Toast } from "primereact/toast";
 import { UserService } from "./service/UserService";
-import { FamilyService } from "./service/FamilyService";
 import { InputText } from "primereact/inputtext";
 import { InputMask } from "primereact/inputmask";
 import { Password } from "primereact/password";
 import { Calendar } from "primereact/calendar";
-import { useEffect } from "preact/hooks";
 
 export const AppTopbar = (props) => {
     const [userModal, setUserModal] = useState(false);
@@ -68,9 +66,10 @@ export const AppTopbar = (props) => {
             email: email,
             password: password,
             familyId: familyId,
+            userId: userId
         };
 
-        let responseUser = await userService.putUser(userId, requestBodyUser);
+        let responseUser = await userService.putUser(requestBodyUser);
 
         // TODO: Aparecer uma mensagem "usuário não existe"
         if (!responseUser) {
@@ -201,8 +200,6 @@ export const AppTopbar = (props) => {
             />
         </>
     );
-
-    console.log(userSelected);
     return (
         <div className="layout-topbar">
             <NavLink to="/dashboard">
@@ -272,11 +269,11 @@ export const AppTopbar = (props) => {
                             <div className="flex items-center justify-center pt-5">
                                 <div className="pr-2">
                                     <span className="p-float-label">
-                                        <InputText id="email" 
-                                                   type="text" 
-                                                   value={email} 
-                                                   onChange={(event) => setEmail(event.target.value)} 
-                                                   className=" text-2xl w-full py-3  leading-tight border border-solid border-1  rounded-lg focus:bg-white focus:outline-none" 
+                                        <InputText id="email"
+                                                   type="text"
+                                                   value={email}
+                                                   onChange={(event) => setEmail(event.target.value)}
+                                                   className=" text-2xl w-full py-3  leading-tight border border-solid border-1  rounded-lg focus:bg-white focus:outline-none"
                                                    required />
                                         <label for="email" className="text-xl">
                                             Email
@@ -303,12 +300,12 @@ export const AppTopbar = (props) => {
 
                         <div className="flex pt-5">
                             <span className="p-float-label w-full">
-                                <Calendar id="birthDate" 
-                                          value={birthDate} 
-                                          style={{ width: "100%", height: "56px" }} 
-                                          onChange={(event) => setBirthDate(event.value)} 
-                                          placeholder={birthDate} 
-                                          required 
+                                <Calendar id="birthDate"
+                                          value={birthDate}
+                                          style={{ width: "100%", height: "56px" }}
+                                          onChange={(event) => setBirthDate(event.value)}
+                                          placeholder={birthDate}
+                                          required
                                 />
                                 <label for="birthDate" className="text-xl ">
                                     Data de Nascimento
@@ -319,12 +316,12 @@ export const AppTopbar = (props) => {
                         <div className="flex items-center justify-content-center pt-5">
                             <div className="flex pr-2 w-full">
                                 <span className="p-float-label w-full">
-                                    <Password id="password" 
-                                              inputClassName="w-full h-4rem" 
-                                              className="w-full h-4rem" 
-                                              value={password} 
-                                              onChange={(event) => setPassword(event.target.value)} 
-                                              required 
+                                    <Password id="password"
+                                              inputClassName="w-full h-4rem"
+                                              className="w-full h-4rem"
+                                              value={password}
+                                              onChange={(event) => setPassword(event.target.value)}
+                                              required
                                     />
                                     <label for="password" className="text-xl">
                                         Senha
@@ -333,13 +330,13 @@ export const AppTopbar = (props) => {
                             </div>
                             <div className="flex w-full">
                                 <span className="p-float-label w-full">
-                                    <Password id="passwordConfirm" 
-                                              inputClassName="w-full h-4rem" 
-                                              className="w-full h-4rem" 
-                                              value={passwordConfirm} 
-                                              onChange={(e) => setPasswordConfirm(e.target.value)} 
-                                              feedback={false} 
-                                              required 
+                                    <Password id="passwordConfirm"
+                                              inputClassName="w-full h-4rem"
+                                              className="w-full h-4rem"
+                                              value={passwordConfirm}
+                                              onChange={(e) => setPasswordConfirm(e.target.value)}
+                                              feedback={false}
+                                              required
                                     />
                                     <label for="passwordConfirm" className="text-xl">
                                         Confirmação de Senha

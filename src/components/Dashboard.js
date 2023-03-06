@@ -4,7 +4,7 @@ import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { ProductService } from "../service/ProductService";
-import {GoumetDialog} from "../components/GoumetDialog/index";
+import { GoumetDialog } from "../components/GoumetDialog/index";
 import { PlatesService } from "../service/PlatesService";
 
 const Dashboard = (props) => {
@@ -17,19 +17,28 @@ const Dashboard = (props) => {
         cost: 0,
         amount: 0,
     };
+
     const [plates, setPlates] = useState(null);
     const [rowIndex, setRowIndex] = useState(0);
     const [products, setProducts] = useState(null);
     const [gourmetDialog, setGourmetDialog] = useState(false);
     const menu1 = useRef(null);
+    const familyId = localStorage.getItem('familyId')
+    const userId = localStorage.getItem('userId')
 
-    
+
     useEffect(() => {
-        
+
         const _platesService = new PlatesService({});
-        _platesService.getPlates().then((data) => setPlates(data))
+        _platesService.getPlates({ userId: userId, familyId: familyId }).then((data) => {
+            console.log(data)
+            setPlates(data)
+        })
+
+
+
         const _productService = new ProductService();
-        _productService.getProducts().then((data) => setProducts(data));
+        _productService.getProducts({ familyId: familyId, userId: userId }).then((data) => setProducts(data));
         document.documentElement.style.fontSize = '14px'
     }, []);
     const openGourmet = (index) => {
@@ -39,10 +48,10 @@ const Dashboard = (props) => {
     const hideDialog = () => {
         setGourmetDialog(false);
     };
-    
+
     return (
         <div className="grid">
-            
+
 
             <div className="col-12 xl:col-6">
                 <div className="card">
@@ -54,7 +63,7 @@ const Dashboard = (props) => {
                             style={{ width: "0%" }}
                             body={(data, props) => (
                                 <>
-                                    <Button icon="pi pi-search" type="button" className="p-button-text" onClick={() => openGourmet(props.rowIndex)}/>
+                                    <Button icon="pi pi-search" type="button" className="p-button-text" onClick={() => openGourmet(props.rowIndex)} />
                                 </>
                             )}
                         />
@@ -68,11 +77,11 @@ const Dashboard = (props) => {
                         <Column field="name" header="Nome" sortable style={{ width: "40%" }} />
                         <Column field="category" header="Categoria" sortable style={{ width: "30%" }} />
                         <Column field="type" header="Tipo" sortable style={{ width: "30%" }} />
-                        
+
                     </DataTable>
                 </div>
             </div>
-            <GoumetDialog gourmetDialog={gourmetDialog} hideDialog={hideDialog} plates={plates} index={rowIndex}/>
+            <GoumetDialog gourmetDialog={gourmetDialog} hideDialog={hideDialog} plates={plates} index={rowIndex} />
 
         </div>
     );

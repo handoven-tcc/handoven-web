@@ -40,6 +40,7 @@ const App = () => {
     const copyTooltipRef = useRef();
     const location = useLocation();
     const familyId = localStorage.getItem('familyId')
+    const userId = localStorage.getItem('userId')
 
     PrimeReact.ripple = true;
 
@@ -48,7 +49,10 @@ const App = () => {
 
     useEffect(() => {
         const userService = new UserService()
-        userService.getFamilyId(familyId).then((data) => setUsers(data))
+        userService.getFamilyId({familyId, userId}).then((data) => {
+            setUsers(data)
+        }
+        )
 
         if (mobileMenuActive) {
             addClass(document.body, "body-overflow-hidden");
