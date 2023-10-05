@@ -1,61 +1,47 @@
 {
-    "name": "sakai-react",
-    "version": "7.0.3-SNAPSHOT",
-    "homepage": ".",
-    "private": false,
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/primefaces/sakai-react.git"
-    },
-    "license": "MIT",
-    "dependencies": {
-        "@fullcalendar/core": "^5.7.2",
-        "@fullcalendar/daygrid": "^5.7.2",
-        "@fullcalendar/interaction": "^5.7.2",
-        "@fullcalendar/react": "^5.7.0",
-        "@fullcalendar/timegrid": "^5.7.2",
-        "axios": "^0.19.0",
-        "chart.js": "3.3.2",
-        "classnames": "^2.2.6",
-        "primeflex": "3.1.0",
-        "primeicons": "^5.0.0",
-        "primereact": "7.2.0",
-        "prismjs": "1.9.0",
-        "react": "^17.0.1",
-        "react-app-polyfill": "^1.0.6",
-        "react-dom": "^17.0.1",
-        "react-router-dom": "^5.2.0",
-        "react-scripts": "3.4.1",
-        "react-transition-group": "^4.4.1",
-        "sass": "^1.32.8"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
-        "dev": "vite",
-        "preview": "vite preview"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app"
-        ]
-    },
-    "browserslist": [
-        ">0.2%",
-        "not dead",
-        "not ie <= 11",
-        "not op_mini all"
-    ],
-    "devDependencies": {
-        "@types/react": "^18.0.17",
-        "@types/react-dom": "^18.0.6",
-        "@vitejs/plugin-react": "^2.1.0",
-        "autoprefixer": "^10.4.12",
-        "postcss": "^8.4.18",
-        "tailwindcss": "^3.2.0",
-        "typescript": "^4.6.4",
-        "vite": "^3.1.0"
-    }
+  "name": "prototipo_front",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.1.1",
+    "@material-tailwind/react": "2.0.1",
+    "@phosphor-icons/react": "^2.0.10",
+    "@radix-ui/react-toast": "^1.1.4",
+    "@types/node": "20.4.6",
+    "@types/react": "18.2.18",
+    "@types/react-dom": "18.2.7",
+    "autoprefixer": "^10.4.14",
+    "axios": "^1.4.0",
+    "cookie": "^0.5.0",
+    "cookies-next": "^4.0.0",
+    "eslint": "8.46.0",
+    "eslint-config-next": "13.0.6",
+    "keen-slider": "^6.8.6",
+    "moment": "^2.29.4",
+    "next": "13.0.6",
+    "next-auth": "^4.23.1",
+    "nookies": "^2.5.2",
+    "phosphor-react": "^1.4.1",
+    "postcss": "^8.4.27",
+    "react": "18.2.0",
+    "react-datetime": "^3.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.45.2",
+    "react-slider": "^2.0.6",
+    "tailwindcss": "^3.3.3",
+    "typescript": "5.1.6",
+    "use-context-selector": "^1.4.1",
+    "use-react-countries": "^1.1.0",
+    "uuid": "^9.0.1",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/cookie": "^0.5.2"
+  }
 }
