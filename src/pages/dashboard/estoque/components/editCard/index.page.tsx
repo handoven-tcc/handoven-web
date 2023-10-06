@@ -58,7 +58,7 @@ interface createCardProps {
   setField: () => IProduct;
 }
 
-export function EditCard(req: createCardProps) {
+export default function EditCard(req: createCardProps) {
   const [name, setName] = useState("");
   const [category, setCategory] = useState(-1);
   const [type, setType] = useState("");
@@ -85,7 +85,7 @@ export function EditCard(req: createCardProps) {
     };
 
     fetchRepos();
-  }, [req.name]);
+  }, [req, req.name]);
 
   async function handleUpdateProduct() {
     const dateNow = new Date();

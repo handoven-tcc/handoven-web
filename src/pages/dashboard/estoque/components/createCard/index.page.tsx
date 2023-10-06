@@ -18,7 +18,7 @@ interface createCardProps {
   handleOpen: () => void;
 }
 
-export function CreateCard(req: createCardProps) {
+export default function CreateCard(req: createCardProps) {
   const [name, setName] = useState("");
   const [category, setCategory] = useState(-1);
   const [type, setType] = useState("");

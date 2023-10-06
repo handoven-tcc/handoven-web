@@ -107,10 +107,6 @@ export function CardItem({
     await deleteProduct(id, familyId);
   }
 
-  useEffect(() => {
-    console.log(openEdit);
-  }, []);
-
   return (
     <div>
       <Card

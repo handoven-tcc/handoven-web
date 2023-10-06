@@ -25,6 +25,7 @@ import { useState } from "react";
 // @ts-ignore
 import { useCountries } from "use-react-countries";
 import { Check, Trash, X } from "phosphor-react";
+import Image from "next/image";
 
 export default function EstoquePage() {
   const [openTab, setOpenTab] = useState(1);
@@ -186,7 +187,7 @@ export default function EstoquePage() {
                               color="blue-gray"
                               className="flex h-10 items-center gap-2 rounded-r-none rounded-l-md border border-r-0 border-blue-gray-200 bg-blue-gray-500/10 pl-3"
                             >
-                              <img
+                              <Image
                                 src={flags.svg}
                                 alt={name}
                                 className="h-4 w-4 rounded-full object-cover"
@@ -207,7 +208,7 @@ export default function EstoquePage() {
                                     className="flex items-center gap-2"
                                     onClick={() => setCountry(index)}
                                   >
-                                    <img
+                                    <Image
                                       src={flags.svg}
                                       alt={name}
                                       className="h-5 w-5 rounded-full object-cover"

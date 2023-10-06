@@ -5,8 +5,8 @@ import { IProduct, ProductContext } from "../../../contexts/ProductsContext";
 import { useContextSelector } from "use-context-selector";
 import { getCookie } from "cookies-next";
 import { Plus } from "phosphor-react";
-import { CreateCard } from "./components/createCard/index.page";
-import { EditCard } from "./components/editCard/index.page";
+import CreateCard from "./components/createCard/index.page";
+import EditCard from "./components/editCard/index.page";
 import { INextApi } from "../../../types";
 
 export default function EstoquePage() {
