@@ -29,21 +29,21 @@ export interface IPlate {
 }
 
 interface PlateContextProps {
-  sobremesas: IPlate[]
-  saladas: IPlate[]
-  sopas: IPlate[]
-  omeletes: IPlate[]
-  asiaticos: IPlate[]
-  brasileiro: IPlate[]
-  risotos: IPlate[]
-  frangos: IPlate[]
-  massas: IPlate[]
-  peixes : IPlate[]
-  pizzas : IPlate[]
-  bebidas : IPlate[]
-  aperitivos : IPlate[]
-  vegetarianas : IPlate[]
-  findPlates: (family: string) => Promise<void>
+  sobremesas: IPlate[];
+  saladas: IPlate[];
+  sopas: IPlate[];
+  omeletes: IPlate[];
+  asiaticos: IPlate[];
+  brasileiro: IPlate[];
+  risotos: IPlate[];
+  frangos: IPlate[];
+  massas: IPlate[];
+  peixes: IPlate[];
+  pizzas: IPlate[];
+  bebidas: IPlate[];
+  aperitivos: IPlate[];
+  vegetarianas: IPlate[];
+  findPlates: (family: string) => Promise<void>;
 }
 
 export const PlateContext = createContext({} as PlateContextProps);
@@ -75,20 +75,20 @@ export function PlateContextProvider({ children }: PlateContextProviderProps) {
       }
     );
 
-    setSobremesas( res.data.filter((o:IPlate) => o.category == 1))
-    setSaladas( res.data.filter((o:IPlate) => o.category == 2))
-    setSopas( res.data.filter((o:IPlate) => o.category == 3))
-    setOmeletes( res.data.filter((o:IPlate) => o.category == 4))
-    setAsiaticos( res.data.filter((o:IPlate) => o.category == 5))
-    setBrasileiro( res.data.filter((o:IPlate) => o.category == 6))
-    setRisotos( res.data.filter((o:IPlate) => o.category == 7))
-    setFrangos( res.data.filter((o:IPlate) => o.category == 8))
-    setMassas( res.data.filter((o:IPlate) => o.category == 9))
-    setPeixes( res.data.filter((o:IPlate) => o.category == 10))
-    setPizzas( res.data.filter((o:IPlate) => o.category == 11))
-    setBebidas( res.data.filter((o:IPlate) => o.category == 12))
-    setAperitivos( res.data.filter((o:IPlate) => o.category == 13))
-    setVegetarianas( res.data.filter((o:IPlate) => o.category == 14))
+    setSobremesas(res.data.filter((o: IPlate) => o.category == 1));
+    setSaladas(res.data.filter((o: IPlate) => o.category == 2));
+    setSopas(res.data.filter((o: IPlate) => o.category == 3));
+    setOmeletes(res.data.filter((o: IPlate) => o.category == 4));
+    setAsiaticos(res.data.filter((o: IPlate) => o.category == 5));
+    setBrasileiro(res.data.filter((o: IPlate) => o.category == 6));
+    setRisotos(res.data.filter((o: IPlate) => o.category == 7));
+    setFrangos(res.data.filter((o: IPlate) => o.category == 8));
+    setMassas(res.data.filter((o: IPlate) => o.category == 9));
+    setPeixes(res.data.filter((o: IPlate) => o.category == 10));
+    setPizzas(res.data.filter((o: IPlate) => o.category == 11));
+    setBebidas(res.data.filter((o: IPlate) => o.category == 12));
+    setAperitivos(res.data.filter((o: IPlate) => o.category == 13));
+    setVegetarianas(res.data.filter((o: IPlate) => o.category == 14));
   }
   return (
     <PlateContext.Provider
@@ -102,12 +102,12 @@ export function PlateContextProvider({ children }: PlateContextProviderProps) {
         risotos,
         frangos,
         massas,
-        peixes ,
-        pizzas ,
-        bebidas ,
-        aperitivos ,
-        vegetarianas ,
-        findPlates
+        peixes,
+        pizzas,
+        bebidas,
+        aperitivos,
+        vegetarianas,
+        findPlates,
       }}
     >
       {children}

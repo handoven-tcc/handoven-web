@@ -10,13 +10,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    box-sizing: 'border-box';
+    box-sizing: "border-box";
     padding: 0;
     margin: 0;
   }
 }
 
 body {
-  -webkit-font-smoothing: 'antialised';
-  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: "antialised";
+  font-family: "Montserrat", sans-serif;
 }

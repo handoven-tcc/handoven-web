@@ -183,7 +183,7 @@ export function Header() {
               href=""
               className="flex gap-2 hover:bg-gray-100 p-2 rounded-sm duration-300"
             >
-              <UsersThree size={20} color="#3c5654" /> Família 
+              <UsersThree size={20} color="#3c5654" /> Família
             </Link>
             <Link
               href=""
@@ -191,7 +191,6 @@ export function Header() {
             >
               <Gear size={20} color="#3c5654" /> Configuração
             </Link>
-
           </div>
         </div>
       </Drawer>

@@ -33,28 +33,35 @@ export default function RegisterPage() {
   const router = useRouter();
   const timerRef = useRef(0);
   const session = useSession();
-  const { createUser }   = useContextSelector(AuthContext, (context) => {
-    return context
-  })
+  const { createUser } = useContextSelector(AuthContext, (context) => {
+    return context;
+  });
   const [message, setMessage] = useState("");
-  
+
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
 
     try {
-      const [day, month, year] = birthDate.split('/'); 
+      const [day, month, year] = birthDate.split("/");
       const date = new Date(+year, +month - 1, +day);
-      let completeName = name + " " + surname
-        setMessage("Erro ao criar familia");
-      
-      const responseUser = await createUser({name:completeName, email, birthDate: date, familyName , cell, password})
-      console.log(responseUser)
-      if(responseUser) {
-        setMessage("Concluido!")
+      let completeName = name + " " + surname;
+      setMessage("Erro ao criar familia");
+
+      const responseUser = await createUser({
+        name: completeName,
+        email,
+        birthDate: date,
+        familyName,
+        cell,
+        password,
+      });
+      console.log(responseUser);
+      if (responseUser) {
+        setMessage("Concluido!");
         router.push("/home");
       }
     } catch (error) {
-      setMessage("Email já em uso!")
+      setMessage("Email já em uso!");
       console.log("[REGISTER_ERROR]: ", error);
     }
   }
@@ -64,7 +71,7 @@ export default function RegisterPage() {
   return (
     <div>
       <Toast.Provider swipeDirection="right">
-      {message == "Email já em uso!" ? (
+        {message == "Email já em uso!" ? (
           <>
             <Toast.Root
               className="absolute right-0 top-0 border-none mt-3 mr-3 rounded-xl transition"
@@ -74,7 +81,7 @@ export default function RegisterPage() {
               <div className="flex flex-col">
                 <Alert className="bg-[#d40b03]/10 text-[#d40b03] border-l-4 border-[#d40b03] rounded-none font-medium mr-[-10px]">
                   <Typography className="font-medium text-sm flex">
-                  {message}
+                    {message}
                     <Toast.Action
                       className="pl-4"
                       asChild
@@ -91,7 +98,7 @@ export default function RegisterPage() {
             <Toast.Viewport className="ToastViewport" />
           </>
         ) : null}
-         {message == "Concluido!" ? (
+        {message == "Concluido!" ? (
           <>
             <Toast.Root
               className="absolute right-0 top-0 border-none mt-3 mr-3 rounded-xl transition"
@@ -101,7 +108,7 @@ export default function RegisterPage() {
               <div className="flex flex-col">
                 <Alert className="bg-[#33b864]/10 text-[#33b864] border-l-4 border-[#33b864] rounded-none font-medium mr-[-10px]">
                   <Typography className="font-medium text-sm flex">
-                  {message}
+                    {message}
                     <Toast.Action
                       className="pl-4"
                       asChild
@@ -118,7 +125,7 @@ export default function RegisterPage() {
             <Toast.Viewport className="ToastViewport" />
           </>
         ) : null}
-        </Toast.Provider>
+      </Toast.Provider>
       <Image
         src={wave}
         alt="wave"
@@ -161,7 +168,7 @@ export default function RegisterPage() {
                     size="lg"
                     width={130}
                     icon={<User />}
-                    onChange={(e) => (setName(e.target.value))}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
                 <div className="w-[14rem]  md:w-[20rem] pt-4">
@@ -171,7 +178,7 @@ export default function RegisterPage() {
                     size="lg"
                     width={130}
                     icon={<User />}
-                    onChange={(e) => (setSurname(e.target.value))}
+                    onChange={(e) => setSurname(e.target.value)}
                   />
                 </div>
                 <div className="w-[14rem]  md:w-[20rem] pt-4">
@@ -181,7 +188,7 @@ export default function RegisterPage() {
                     size="lg"
                     width={130}
                     icon={<UsersThree />}
-                    onChange={(e) => (setFamilyName(e.target.value))}
+                    onChange={(e) => setFamilyName(e.target.value)}
                   />
                 </div>
                 <div className="w-[14rem]  md:w-[20rem] pt-4">
@@ -191,7 +198,7 @@ export default function RegisterPage() {
                     size="lg"
                     width={130}
                     icon={<EnvelopeSimple />}
-                    onChange={(e) => (setEmail(e.target.value))}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>
@@ -203,10 +210,10 @@ export default function RegisterPage() {
                     size="lg"
                     width={130}
                     icon={<DeviceMobile />}
-                    onChange={(e) => (setCell(e.target.value))}
+                    onChange={(e) => setCell(e.target.value)}
                   />
                 </div>
-                
+
                 <div className="w-[14rem] md:w-[20rem] pt-4">
                   <Input
                     label="Data de Nascimento"
@@ -214,7 +221,7 @@ export default function RegisterPage() {
                     size="lg"
                     width={130}
                     icon={<Calendar />}
-                    onChange={(e) => (setBirthDate(e.target.value))}
+                    onChange={(e) => setBirthDate(e.target.value)}
                   />
                 </div>
 
@@ -226,7 +233,7 @@ export default function RegisterPage() {
                     size="lg"
                     width={130}
                     icon={<LockKey />}
-                    onChange={(e) => (setPassword(e.target.value))}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <div className="w-[14rem] md:w-[20rem] pt-4">
@@ -237,7 +244,7 @@ export default function RegisterPage() {
                     size="lg"
                     width={130}
                     icon={<LockKey />}
-                    onChange={(e) => (setConfirmPassword(e.target.value))}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                 </div>
               </div>
@@ -267,14 +274,14 @@ export default function RegisterPage() {
                 className="text-white block w-[472px] h-[50px] md:w-[420px] rounded-lg outline-none border-none bg-gradient-to-r from-red-500 to-yellow-500 bg-200% text-lg color-white font-default mt-6 md:mt-2 cursor-pointer transition-[0.5s] hover:bg-right"
                 value="CADASTRAR"
                 onClick={() => {
-                  setMessage("")
+                  setMessage("");
                   setOpen(false);
                   window.clearTimeout(timerRef.current);
                   timerRef.current = window.setTimeout(() => {
                     setOpen(true);
                   }, 100);
-                }}>
-                </input>
+                }}
+              ></input>
             </div>
 
             <div className="pt-2 md:hidden">

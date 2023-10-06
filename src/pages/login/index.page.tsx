@@ -16,12 +16,12 @@ import { useContextSelector } from "use-context-selector";
 import { AuthContext } from "../../contexts/AuthContext";
 
 export interface IUser {
-  id: string
-  name: string
-  birthDate: string
-  email: number
-  cell: string
-  familyId: string
+  id: string;
+  name: string;
+  birthDate: string;
+  email: number;
+  cell: string;
+  familyId: string;
 }
 
 const submitLoginFormSchema = z.object({
@@ -48,9 +48,9 @@ export default function LoginPage() {
   const timerRef = useRef(0);
   const session = useSession();
   const [message, setMessage] = useState("");
-  const authenticateUser  = useContextSelector(AuthContext, (context) => {
-    return context.authenticateUser
-  })
+  const authenticateUser = useContextSelector(AuthContext, (context) => {
+    return context.authenticateUser;
+  });
 
   const {
     register,
@@ -68,14 +68,14 @@ export default function LoginPage() {
     e.preventDefault();
 
     try {
-      const response = await authenticateUser({email, password})
+      const response = await authenticateUser({ email, password });
 
       console.log("[LOGIN_RESPONSE]: ", response);
-      
+
       if (response) {
-        setMessage("Login Concluido!")
+        setMessage("Login Concluido!");
         router.push("/home");
-      } 
+      }
     } catch (error) {
       setMessage("Email ou senha inválidos");
       console.log("[LOGIN_ERROR]: ", error);
@@ -109,12 +109,8 @@ export default function LoginPage() {
                     </Toast.Action>
                   </Typography>
                   <ul className="mt-2 ml-2 list-disc list-inside">
-                    <li className="text-xs">
-                      Ao menos 10 caracteres
-                    </li>
-                    <li className="text-xs">
-                      Seja um Email Valido
-                    </li>
+                    <li className="text-xs">Ao menos 10 caracteres</li>
+                    <li className="text-xs">Seja um Email Valido</li>
                   </ul>
                 </Alert>
               </div>
@@ -148,8 +144,9 @@ export default function LoginPage() {
             </Toast.Root>
             <Toast.Viewport className="ToastViewport" />
           </>
-        ) : <>
-                    <Toast.Root
+        ) : (
+          <>
+            <Toast.Root
               className="absolute right-0 top-0 border-none mt-3 mr-3 rounded-xl transition"
               open={open}
               onOpenChange={setOpen}
@@ -172,8 +169,8 @@ export default function LoginPage() {
               </div>
             </Toast.Root>
             <Toast.Viewport className="ToastViewport" />
-          
-          </>}
+          </>
+        )}
         <div>
           <Image
             src={wave}
@@ -217,7 +214,7 @@ export default function LoginPage() {
                       width={130}
                       icon={<User />}
                       {...register("email")}
-                      onChange={(e) => (setEmail(e.target.value))}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
 
@@ -230,7 +227,7 @@ export default function LoginPage() {
                       width={130}
                       icon={<LockKey />}
                       {...register("password")}
-                      onChange={(e) => (setPassword(e.target.value))}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
                 </div>
@@ -262,7 +259,7 @@ export default function LoginPage() {
                     className="text-white block w-[320px] h-[50px] mt-2 rounded-lg outline-none border-none bg-gradient-to-r from-red-500 to-yellow-500 bg-200% text-lg color-white font-default cursor-pointer transition-[0.5s] hover:bg-right"
                     value="LOGIN"
                     onClick={() => {
-                      setMessage("")
+                      setMessage("");
                       setOpen(false);
                       window.clearTimeout(timerRef.current);
                       timerRef.current = window.setTimeout(() => {

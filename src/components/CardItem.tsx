@@ -1,30 +1,19 @@
-import Image from "next/image";
-import { Copy, Minus, Pen, Plus, ShoppingCart, Trash } from "phosphor-react";
-import { useState } from "react";
-import quero from "../assets/estoque/lacta.jpg";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Chip,
-  Tooltip,
-  Typography,
-} from "@material-tailwind/react";
+import { Pen, Trash } from "phosphor-react";
+import { Button, Card, CardBody, CardFooter } from "@material-tailwind/react";
 import { useContextSelector } from "use-context-selector";
 import { IProduct, ProductContext } from "../contexts/ProductsContext";
 import { getCookie } from "cookies-next";
+import { useEffect } from "react";
 
 interface CardProps {
-  name: string;
+  unitMeasure: string;
   type: string;
+  name: string;
   validity: string;
+  expiryProduct: boolean;
   category: number;
   cost: string;
   amount: number;
-  expiryProduct: boolean;
-  unitMeasure: string;
   id: string;
   openEdit: boolean;
   handleOpenEdit: (req: IProduct) => void;
@@ -33,27 +22,38 @@ interface CardProps {
 enum ColorCategory {
   "blue-500",
   "slate-500",
+  // @ts-ignore
   "gray-500",
+  // @ts-ignore
   "purple-500",
   "green-500",
+  // @ts-ignore
   "gray-500",
   "amber-500",
   "yellow-500",
   "lime-500",
   "orange-500",
   "teal-500",
+  // @ts-ignore
   "rose-500",
   "sky-500",
+  // @ts-ignore
   "indigo-500",
+  // @ts-ignore
   "indigo-500",
+  // @ts-ignore
   "purple-500",
+  // @ts-ignore
   "fuchsia-500",
   "pink-500",
+  // @ts-ignore
   "rose-500",
+  // @ts-ignore
   "fuchsia-500",
   "cyan-500",
   "violet-500",
 }
+
 enum Category {
   Outros,
   "Açúcares",
@@ -80,15 +80,16 @@ enum Category {
 }
 
 export function CardItem({
-  name,
-  type,
-  validity,
   unitMeasure,
+  type,
+  name,
+  validity,
+  expiryProduct,
   category,
   cost,
   amount,
-  expiryProduct,
   id,
+  openEdit,
   handleOpenEdit,
 }: CardProps) {
   const { deleteProduct } = useContextSelector(ProductContext, (context) => {
@@ -105,6 +106,10 @@ export function CardItem({
   async function HandleDeleteProduct() {
     await deleteProduct(id, familyId);
   }
+
+  useEffect(() => {
+    console.log(openEdit);
+  }, []);
 
   return (
     <div>
@@ -162,7 +167,7 @@ export function CardItem({
             <div className="flex w-full justify-between ">
               <div className="flex ">
                 <Button
-                 color="orange"
+                  color="orange"
                   className="p-3 rounded-md flex justify-center items-center "
                   onClick={() =>
                     handleOpenEdit({
@@ -184,7 +189,7 @@ export function CardItem({
               </div>
               <div className="flex">
                 <Button
-                color="red"
+                  color="red"
                   className="p-3 rounded-md flex justify-center items-center"
                   onClick={HandleDeleteProduct}
                 >
@@ -223,7 +228,7 @@ export function CardItem({
                   color="red"
                   onClick={HandleDeleteProduct}
                 >
-                  <Trash size={16} color="#fff" weight="bold"/>
+                  <Trash size={16} color="#fff" weight="bold" />
                 </Button>
               </div>
             </div>

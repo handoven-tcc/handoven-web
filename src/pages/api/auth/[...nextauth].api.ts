@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, {NextAuthOptions} from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
@@ -18,14 +18,14 @@ export const authOptions: NextAuthOptions = {
       name: "Credentials",
 
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: {label: "Email", type: "email"},
+        password: {label: "Password", type: "password"},
       },
       async authorize(credentials: any): Promise<any> {
 
         const res: any = await axios
           .post("https://handovenapi.onrender.com/user/login", {
-            email: credentials?.email, 
+            email: credentials?.email,
             password: credentials?.password,
             headers: {
               "Content-Type": "application/json",
@@ -34,9 +34,9 @@ export const authOptions: NextAuthOptions = {
               "X-HandOven-User": "111111111111111111111111",
             },
           })
-          console.log(res)
-            return res
-        },
+        console.log(res)
+        return res
+      },
     }),
 
     GoogleProvider({
@@ -52,7 +52,7 @@ export const authOptions: NextAuthOptions = {
   ],
 
   callbacks: {
-    async signIn({ account }) {
+    async signIn({account}) {
       return true;
     },
   },
