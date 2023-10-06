@@ -4,6 +4,7 @@ import { SessionProvider } from 'next-auth/react'
 import { AuthContextProvider } from '../contexts/AuthContext'
 import Script from 'next/script'
 import { ProductContextProvider } from '../contexts/ProductsContext'
+import { PlateContextProvider } from '../contexts/PlateContext'
 
 export default function App({
   Component,
@@ -12,9 +13,11 @@ export default function App({
   return (
       <AuthContextProvider>
         <ProductContextProvider>
+        <PlateContextProvider>
     <SessionProvider session={session}>
       <Component {...pageProps} />
     </SessionProvider>
+        </PlateContextProvider>
         </ProductContextProvider>
       </AuthContextProvider>
     )
