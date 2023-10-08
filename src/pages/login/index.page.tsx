@@ -14,6 +14,8 @@ import * as Toast from "@radix-ui/react-toast";
 import { useRouter } from "next/navigation";
 import { useContextSelector } from "use-context-selector";
 import { AuthContext } from "../../contexts/AuthContext";
+import Link from "next/link";
+import { setCookie } from "cookies-next";
 
 export interface IUser {
   id: string;
@@ -59,6 +61,10 @@ export default function LoginPage() {
   } = useForm<SubmitLoginForm>({
     resolver: zodResolver(submitLoginFormSchema),
   });
+
+  function handleRegister() {
+    setCookie("token", "token", { maxAge: 60 * 60 * 24 });
+  }
 
   async function handleConnectGoogle() {
     await signIn("google");
@@ -270,17 +276,21 @@ export default function LoginPage() {
                 </div>
 
                 <div className="pt-3 flex flex-col">
-                  <a href="" className="">
+                  <Link href="/register">
                     <span className="text-black font-default text-sm">
                       Não tem uma conta?{" "}
                       <strong className="font-default text-sm text-red-500 hover:text-red-900 font-bold">
                         Crie aqui
                       </strong>
                     </span>
-                  </a>
-                  <a href="#" className="mt-2 font-normal text-sm text-black ">
+                  </Link>
+                  <Link
+                    href={"/home"}
+                    className="mt-2 font-normal text-sm text-black"
+                    onClick={handleRegister}
+                  >
                     Entrar como convidado.
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="flex items-center justify-center flex-col">

@@ -19,6 +19,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import * as Toast from "@radix-ui/react-toast";
+import Link from "next/link";
 
 export default function RegisterPage() {
   const [open, setOpen] = useState(false);
@@ -286,13 +287,13 @@ export default function RegisterPage() {
 
             <div className="pt-2 md:hidden">
               <span className="text-black font-default text-sm">
-                Não tem uma conta?{" "}
-                <a
-                  href=""
+                Já tem uma conta?{" "}
+                <Link
+                  href="/login"
                   className="font-default text-sm text-red-500 hover:text-red-900 font-bold"
                 >
-                  Crie aqui
-                </a>
+                  Entre aqui
+                </Link>
               </span>
             </div>
           </form>
