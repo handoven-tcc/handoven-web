@@ -1,13 +1,37 @@
+import {
+  Button,
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogHeader,
+  Input,
+  Select,
+  Option,
+} from "@material-tailwind/react";
 import { Header } from "../../../components/Header";
 import { CardItem } from "../../../components/CardItem";
 import { useEffect, useState } from "react";
-import { IProduct, ProductContext } from "../../../contexts/ProductsContext";
+import { ProductContext } from "../../../contexts/ProductsContext";
 import { useContextSelector } from "use-context-selector";
+import { AuthContext } from "../../../contexts/AuthContext";
 import { getCookie } from "cookies-next";
-import { Plus } from "phosphor-react";
+import { useRouter } from "next/router";
+import { INext } from "../../home/index.page";
+import { ArrowCircleRight, ArrowFatRight, Plus } from "phosphor-react";
 import CreateCard from "./components/createCard/index.page";
 import EditCard from "./components/editCard/index.page";
-import { INextApi } from "../../../types";
+interface IProduct {
+  id: string;
+  name: string;
+  type: string;
+  validity: string;
+  category: number;
+  cost: string;
+  amount: number;
+  unitMeasure: string;
+  familyId: string;
+  expiryProduct: boolean;
+}
 
 export default function EstoquePage() {
   const [name, setName] = useState("");
@@ -15,7 +39,7 @@ export default function EstoquePage() {
   const [type, setType] = useState("");
   const [validity, setValidity] = useState("");
   const [unitMeasure, setUnitMeasure] = useState("");
-  const [id, setId] = useState("");
+  const [ id, setId ] = useState("");
   const [cost, setCost] = useState("");
   const [amount, setAmount] = useState("");
   const [expiryProduct, setExpiryProduct] = useState(false);
@@ -40,20 +64,30 @@ export default function EstoquePage() {
     setOpenEdit(!openEdit);
   }
 
-  function handleEditInformation(req: IProduct) {
-    setAmount(req.amount.toString());
-    setCategory(req.category);
-    setCost(req.cost);
-    setExpiryProduct(req.expiryProduct);
-    setName(req.name);
-    setType(req.type);
-    setId(req.id ?? "");
-    setUnitMeasure(req.unitMeasure);
-    setValidity(req.validity);
+  async function handleEditInformation({
+    amount,
+    category,
+    cost,
+    expiryProduct,
+    name,
+    type,
+    unitMeasure,
+    validity,
+    id,
+  }: IProduct) {
+    setAmount(amount.toString());
+    setCategory(category);
+    setCost(cost);
+    setExpiryProduct(expiryProduct);
+    setName(name);
+    setType(type);
+    setId(id)
+    setUnitMeasure(unitMeasure);
+    setValidity(validity);
   }
-
+    
   function addProductInField(): IProduct {
-    const amountInt = parseInt(amount);
+    const amountInt = parseInt(amount) 
     return {
       id,
       name,
@@ -61,16 +95,19 @@ export default function EstoquePage() {
       validity,
       category,
       cost,
-      amount: amountInt,
+      amount:amountInt,
       unitMeasure,
       familyId,
-      expiryProduct,
-    };
+      expiryProduct
+    }
   }
+
+
 
   async function findProducts(family: string): Promise<void> {
     try {
-      if (count == 0) {
+      console.log(count)
+      if (count > 1) {
         await findProductsByFamily(family);
         setCount(count + 1);
       }
@@ -81,7 +118,7 @@ export default function EstoquePage() {
 
   useEffect(() => {
     findProducts(familyId);
-  });
+  }, []);
 
   return (
     <div>
@@ -89,9 +126,9 @@ export default function EstoquePage() {
       <div className="flex item-center justify-center gap-4 p-6">
         <div className="grid grid-cols-5 gap-2">
           {products.length > 0 ? (
-            products.map((product, index) => (
+            products.map((product) => (
+              // eslint-disable-next-line react/jsx-key
               <CardItem
-                key={index}
                 unitMeasure={product.unitMeasure}
                 type={product.type}
                 name={product.name}
@@ -137,9 +174,10 @@ export default function EstoquePage() {
   );
 }
 
-export async function getServerSideProps({ req, res }: INextApi) {
+export async function getServerSideProps({ req, res }: INext) {
   const token = getCookie("token", { req, res });
   const familyId = getCookie("familyId", { req, res });
+  console.log(token);
   if (token == undefined || familyId == undefined) {
     res.writeHead(302, { Location: "/login" });
     res.end();

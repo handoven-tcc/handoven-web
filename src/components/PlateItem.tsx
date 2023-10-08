@@ -1,13 +1,24 @@
 import { Button } from "@material-tailwind/react";
+import { useKeenSlider } from "keen-slider/react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight, Heart } from "phosphor-react";
+import { useCallback } from "react";
 
 interface IPlateItem {
   img: string;
   name: string;
+  id: string;
+}
+function isDisabled(id: string) {
+  if(id == "") {
+    return true
+  }
+  return false
 }
 
-export function PlateItem({ img, name }: IPlateItem) {
+
+export function PlateItem({ img, name, id }: IPlateItem) {
   return (
     <div>
       <a href="#!">
@@ -30,13 +41,16 @@ export function PlateItem({ img, name }: IPlateItem) {
         </div>
         <div className="flex p-2">
           <a href="#buttons-with-link">
-            <Button
-              variant="gradient"
-              color="red"
-              className="flex items-center shadow-lg justify-center gap-1"
-            >
-              Detalhes <ArrowRight size={22} color="#fff" />
-            </Button>
+            <Link href={`../receita/${id}`} key={id} prefetch={false}>
+              <Button
+                disabled={isDisabled(id)}
+                variant="gradient"
+                color="red"
+                className="flex items-center shadow-lg justify-center gap-1 disabled:bg-red-900"
+              >
+                Detalhes <ArrowRight size={22} color="#fff" />
+              </Button>
+            </Link>
           </a>
         </div>
       </div>

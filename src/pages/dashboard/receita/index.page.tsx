@@ -36,8 +36,8 @@ export default function ReceitaPage() {
   const [sliderRefSobremesa] = useKeenSlider({
     loop: true,
     slides: {
-      perView: 8,
-      spacing: 20,
+      perView: 16,
+      spacing: 10,
     },
   });
   const [sliderRefSalada] = useKeenSlider({
@@ -146,12 +146,14 @@ export default function ReceitaPage() {
           <h1 className="font-bold pt-4 text-red-500 text-4xl font-default ">
             Encontre sua receita favorita
           </h1>
+          <div>
           <Input
             className=""
             label="Pesquise por Receitas"
             color="red"
             icon={<MagnifyingGlass />}
-          />
+            />
+            </div>
         </div>
         <div className="flex flex-col items-start justify-center">
           {sobremesas && sobremesas.length ? (
@@ -162,7 +164,20 @@ export default function ReceitaPage() {
               </h2>
             </div>
           ) : null}
-          <div ref={sliderRefSobremesa} className="keen-slider  flex">
+          <div ref={sliderRefSobremesa} className="keen-slider flex">
+          { sobremesas && sobremesas.length > 0 ? (
+            sobremesas.map((sobremesa, index) => (
+              // eslint-disable-next-line react/jsx-key
+              <div className="keen-slider__slide  mt-2 flex flex-col self-start rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
+              <PlateItem
+                key={index}
+                img={sobremesa.image}
+                name={sobremesa.name}
+                id={sobremesa.id + ""}
+              />
+              </div>
+            ))
+          ) : null}
             {sobremesas && sobremesas.length > 0
               ? sobremesas.map((sobremesa, index) => (
                   // eslint-disable-next-line react/jsx-key
@@ -171,6 +186,7 @@ export default function ReceitaPage() {
                       key={index}
                       img={sobremesa.image}
                       name={sobremesa.name}
+                      id={sobremesa.id + ""}
                     />
                   </div>
                 ))
@@ -194,6 +210,7 @@ export default function ReceitaPage() {
                         key={index}
                         img={salada.image}
                         name={salada.name}
+                        id={salada.id}
                       />
                     </div>
                   ))
@@ -219,6 +236,7 @@ export default function ReceitaPage() {
                         key={index}
                         img={sopa.image}
                         name={sopa.name}
+                id={sopa.id + ""}
                       />
                     </div>
                   ))
@@ -243,6 +261,7 @@ export default function ReceitaPage() {
                         key={index}
                         img={omelete.image}
                         name={omelete.name}
+                id={omelete.id + ""}
                       />
                     </div>
                   ))
@@ -250,28 +269,31 @@ export default function ReceitaPage() {
             </div>
           </div>
           <div className="flex flex-col items-start justify-center pt-2">
-            {asiaticos && asiaticos.length > 0 ? (
-              <div>
-                {" "}
-                <h2 className="text-xl text-yellow-500 font-default mt-4">
-                  <strong>Pratos Asiáticos</strong>
-                </h2>
+          {
+            asiaticos && asiaticos.length > 0 ? (
+          <div>
+            {" "}
+            <h2 className="text-xl text-yellow-500 font-default mt-4">
+              <strong>Pratos Asiáticos</strong>
+            </h2>
+          </div>
+            ) : null
+          }
+          <div ref={sliderRefAsiatico} className="keen-slider flex">
+          {asiaticos && asiaticos.length > 0 ? (
+            asiaticos.map((asiatico, index) => (
+              // eslint-disable-next-line react/jsx-key
+              <div className="keen-slider__slide  mt-2 flex flex-col self-start rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
+              <PlateItem
+                key={index}
+                img={asiatico.image}
+                name={asiatico.name}
+                id={asiatico.id + ""}
+              />
               </div>
-            ) : null}
-            <div ref={sliderRefAsiatico} className="keen-slider flex">
-              {asiaticos && asiaticos.length > 0
-                ? asiaticos.map((asiatico, index) => (
-                    // eslint-disable-next-line react/jsx-key
-                    <div className="keen-slider__slide  mt-2 flex flex-col self-start rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
-                      <PlateItem
-                        key={index}
-                        img={asiatico.image}
-                        name={asiatico.name}
-                      />
-                    </div>
-                  ))
-                : null}
-            </div>
+            ))
+          ) : null}
+          </div>
           </div>
           <div className="flex flex-col items-start justify-center pt-2">
             {brasileiro && brasileiro.length > 0 ? (
@@ -291,6 +313,7 @@ export default function ReceitaPage() {
                         key={index}
                         img={brasileiro.image}
                         name={brasileiro.name}
+                id={brasileiro.id + ""}
                       />
                     </div>
                   ))
@@ -315,59 +338,29 @@ export default function ReceitaPage() {
                         key={index}
                         img={risoto.image}
                         name={risoto.name}
+                id={risoto.id + ""}
                       />
                     </div>
                   ))
                 : null}
             </div>
           </div>
-          <div className="flex flex-col items-start justify-center pt-2">
-            {frangos && frangos.length > 0 ? (
-              <div>
-                {" "}
-                <h2 className="text-xl text-yellow-500 font-default mt-4">
-                  <strong>Frangos</strong>
-                </h2>
+          <div ref={sliderRefFrangos} className="keen-slider flex">
+          {frangos && frangos.length > 0 ? (
+            frangos.map((frango, index) => (
+              // eslint-disable-next-line react/jsx-key
+              <div className="keen-slider__slide  mt-2 flex flex-col self-start rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
+    
+              <PlateItem
+                key={index}
+                img={frango.image}
+                name={frango.name}
+                id={frango.id + ""}
+              />
               </div>
-            ) : null}
-            <div ref={sliderRefFrangos} className="keen-slider flex">
-              {frangos && frangos.length > 0
-                ? frangos.map((frango, index) => (
-                    // eslint-disable-next-line react/jsx-key
-                    <div className="keen-slider__slide  mt-2 flex flex-col self-start rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
-                      <PlateItem
-                        key={index}
-                        img={frango.image}
-                        name={frango.name}
-                      />
-                    </div>
-                  ))
-                : null}
-            </div>
+            ))
+          ) : null}
           </div>
-          <div className="flex flex-col items-start justify-center pt-2">
-            {frangos && frangos.length > 0 ? (
-              <div>
-                {" "}
-                <h2 className="text-xl text-yellow-500 font-default mt-4">
-                  <strong>Frangos</strong>
-                </h2>
-              </div>
-            ) : null}
-            <div ref={sliderRefFrangos} className="keen-slider flex">
-              {frangos && frangos.length > 0
-                ? frangos.map((frango, index) => (
-                    // eslint-disable-next-line react/jsx-key
-                    <div className="keen-slider__slide  mt-2 flex flex-col self-start rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
-                      <PlateItem
-                        key={index}
-                        img={frango.image}
-                        name={frango.name}
-                      />
-                    </div>
-                  ))
-                : null}
-            </div>
           </div>
           <div className="flex flex-col items-start justify-center pt-2">
             {massas && massas.length > 0 ? (
@@ -387,6 +380,7 @@ export default function ReceitaPage() {
                         key={index}
                         img={massa.image}
                         name={massa.name}
+                id={massa.id + ""}
                       />
                     </div>
                   ))
@@ -411,6 +405,7 @@ export default function ReceitaPage() {
                         key={index}
                         img={peixe.image}
                         name={peixe.name}
+                id={peixe.id + ""}
                       />
                     </div>
                   ))
@@ -435,6 +430,7 @@ export default function ReceitaPage() {
                         key={index}
                         img={pizza.image}
                         name={pizza.name}
+                id={pizza.id + ""}
                       />
                     </div>
                   ))
@@ -459,6 +455,7 @@ export default function ReceitaPage() {
                         key={index}
                         img={bebida.image}
                         name={bebida.name}
+                id={bebida.id + ""}
                       />
                     </div>
                   ))
@@ -483,6 +480,7 @@ export default function ReceitaPage() {
                         key={index}
                         img={aperitivo.image}
                         name={aperitivo.name}
+                id={aperitivo.id + ""}
                       />
                     </div>
                   ))
@@ -507,6 +505,7 @@ export default function ReceitaPage() {
                         key={index}
                         img={vegetariana.image}
                         name={vegetariana.name}
+                id={vegetariana.id + ""}
                       />
                     </div>
                   ))
@@ -515,7 +514,6 @@ export default function ReceitaPage() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

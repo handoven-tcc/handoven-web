@@ -7,14 +7,18 @@ interface PlateContextProviderProps {
   children: ReactNode;
 }
 
-interface ISection {
-  igredients: {
-    igredientes_name: string;
+export interface ICategory {
+    _id: string;
+    igredients_name: string;
     igredients_quantity: number;
     igredients_unit_measure: string;
     igredients_category: number;
     igredients_notes: string;
-  };
+  
+}
+
+export interface ISection {
+  igredients: ICategory[];
   prepare_mode: [];
   extras: [];
 }

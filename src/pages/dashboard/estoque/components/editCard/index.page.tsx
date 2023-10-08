@@ -58,17 +58,17 @@ interface createCardProps {
   setField: () => IProduct;
 }
 
-export default function EditCard(req: createCardProps) {
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState(-1);
-  const [type, setType] = useState("");
-  const [validity, setValidity] = useState("");
-  const [unitMeasure, setUnitMeasure] = useState("");
-  const [id, setId] = useState("");
-  const [cost, setCost] = useState("");
-  const [amount, setAmount] = useState("");
-  const [expiryProduct, setExpiryProduct] = useState(false);
-  const [defaultProduct, setDefaultProduct] = useState<any>({});
+export default function EditCard({ amount,category,cost,expiryProduct,handleOpen,id,name,open,setField,type,unitMeasure,validity}: createCardProps) {
+  const [nameValue, setNameValue] = useState("");
+  const [categoryValue, setCategoryValue] = useState(-1);
+  const [typeValue, setTypeValue] = useState("");
+  const [validityValue, setValidityValue] = useState("");
+  const [unitMeasureValue, setUnitMeasureValue] = useState("");
+  const [idValue, setIdValue] = useState("");
+  const [costValue, setCostValue] = useState("");
+  const [amountValue, setAmountValue] = useState("");
+  const [expiryProductValue, setExpiryProductValue] = useState(false);
+  const [defaultProductValue, setDefaultProductValue] = useState<any>({});
   const { updateProduct } = useContextSelector(ProductContext, (context) => {
     return context;
   });
@@ -76,38 +76,38 @@ export default function EditCard(req: createCardProps) {
 
   useEffect(() => {
     const fetchRepos = async () => {
-      const result = await req.setField();
-      req.handleOpen();
+      const result = await setField();
+      handleOpen();
       const date = result.validity.slice(0, 10).split("-").reverse().join("/");
       result.validity = date;
 
-      setDefaultProduct(result);
+      setDefaultProductValue(result);
     };
 
     fetchRepos();
-  }, [req, req.name]);
+  }, [name]);
 
   async function handleUpdateProduct() {
     const dateNow = new Date();
 
-    console.log(defaultProduct);
+    console.log(defaultProductValue);
     if (name == "") {
-      setName(defaultProduct.name);
+      setNameValue(defaultProductValue.name);
     }
     if (type == "") {
-      setType(defaultProduct.type);
+      setTypeValue(defaultProductValue.type);
     }
     if (validity == "") {
-      setValidity(defaultProduct.validity);
+      setValidityValue(defaultProductValue.validity);
     }
     if (unitMeasure == "") {
-      setUnitMeasure(defaultProduct.unitMeasure);
+      setUnitMeasureValue(defaultProductValue.unitMeasure);
     }
     if (cost == "") {
-      setCost(defaultProduct.cost);
+      setCostValue(defaultProductValue.cost);
     }
-    if (amount == "") {
-      setAmount(defaultProduct.amount);
+    if (String(amount) == "") {
+      setAmountValue(defaultProductValue.amount);
     }
 
     console.log(validity.charAt(2));
@@ -116,22 +116,22 @@ export default function EditCard(req: createCardProps) {
       const dateValidity = new Date(+year, +month - 1, +day);
 
       if (dateValidity > dateNow) {
-        setExpiryProduct(false);
-        setValidity(dateValidity + "");
+        setExpiryProductValue(false);
+        setValidityValue(dateValidity + "");
       } else {
-        setExpiryProduct(true);
+        setExpiryProductValue(true);
       }
     }
     if (new Date(validity) > dateNow) {
-      setExpiryProduct(false);
+      setExpiryProductValue(false);
     } else {
-      setExpiryProduct(true);
+      setExpiryProductValue(true);
     }
     console.log(validity);
     await updateProduct({
-      id: defaultProduct.id,
+      id: defaultProductValue.id,
       name,
-      amount: parseInt(amount),
+      amount: parseInt(amountValue),
       category,
       cost,
       expiryProduct,
@@ -140,11 +140,11 @@ export default function EditCard(req: createCardProps) {
       unitMeasure,
       validity,
     });
-    req.handleOpen();
+    handleOpen();
   }
 
   return (
-    <Dialog open={req.open} handler={req.handleOpen}>
+    <Dialog open={open} handler={handleOpen}>
       <DialogHeader>Edite seu Produto.</DialogHeader>
       <DialogBody divider>
         <div className="flex gap-2 flex-col ">
@@ -152,21 +152,21 @@ export default function EditCard(req: createCardProps) {
             <Input
               type="text"
               label="Nome do Produto"
-              defaultValue={defaultProduct.name}
+              defaultValue={defaultProductValue.name}
               color="black"
               size="lg"
               width={130}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setNameValue(e.target.value)}
             />
 
             <Input
               type="text"
               label="Tipo"
-              defaultValue={defaultProduct.type}
+              defaultValue={defaultProductValue.type}
               color="black"
               size="lg"
               width={130}
-              onChange={(e) => setType(e.target.value)}
+              onChange={(e) => setTypeValue(e.target.value)}
             />
           </div>
 
@@ -174,20 +174,20 @@ export default function EditCard(req: createCardProps) {
             <Input
               type="text"
               label="Validade"
-              defaultValue={defaultProduct.validity}
+              defaultValue={defaultProductValue.validity}
               color="black"
               size="lg"
               width={130}
-              onChange={(e) => setValidity(e.target.value)}
+              onChange={(e) => setValidityValue(e.target.value)}
             />
             <Input
               type="text"
               label="Unidade de Medida"
-              defaultValue={defaultProduct.unitMeasure}
+              defaultValue={defaultProductValue.unitMeasure}
               color="black"
               size="lg"
               width={130}
-              onChange={(e) => setUnitMeasure(e.target.value)}
+              onChange={(e) => setUnitMeasureValue(e.target.value)}
             />
           </div>
 
@@ -196,21 +196,21 @@ export default function EditCard(req: createCardProps) {
               type="text"
               label="Custo"
               color="black"
-              defaultValue={defaultProduct.cost}
+              defaultValue={defaultProductValue.cost}
               size="lg"
               width={130}
               // icon={<LockKey />}
-              onChange={(e) => setCost(e.target.value)}
+              onChange={(e) => setCostValue(e.target.value)}
             />
             <Input
               type="text"
               label="Quantidade"
               color="black"
-              defaultValue={defaultProduct.amount}
+              defaultValue={defaultProductValue.amount}
               size="lg"
               width={130}
               // icon={<LockKey />}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={(e) => setAmountValue(e.target.value)}
             />
           </div>
 
@@ -220,28 +220,28 @@ export default function EditCard(req: createCardProps) {
             className="text-black"
             defaultValue={Category[category]}
           >
-            <Option onClick={() => setCategory(0)}>Outros</Option>
-            <Option onClick={() => setCategory(1)}>Açúcares</Option>
-            <Option onClick={() => setCategory(2)}>Bebidas</Option>
-            <Option onClick={() => setCategory(3)}>Carnes</Option>
-            <Option onClick={() => setCategory(4)}>Chocolates</Option>
-            <Option onClick={() => setCategory(5)}>Condimentos</Option>
-            <Option onClick={() => setCategory(6)}>Conservas</Option>
-            <Option onClick={() => setCategory(7)}>Farinhas</Option>
-            <Option onClick={() => setCategory(8)}>Frutas</Option>
-            <Option onClick={() => setCategory(9)}>Verduras</Option>
-            <Option onClick={() => setCategory(10)}>Gorduras</Option>
-            <Option onClick={() => setCategory(11)}>Grãos</Option>
-            <Option onClick={() => setCategory(12)}>Laticínios</Option>
-            <Option onClick={() => setCategory(13)}>Legumes</Option>
-            <Option onClick={() => setCategory(14)}>Líquidos</Option>
-            <Option onClick={() => setCategory(15)}>Massas</Option>
-            <Option onClick={() => setCategory(16)}>Molhos</Option>
-            <Option onClick={() => setCategory(17)}>Pães</Option>
-            <Option onClick={() => setCategory(18)}>Temperos</Option>
-            <Option onClick={() => setCategory(19)}>Vegetais</Option>
-            <Option onClick={() => setCategory(20)}>Fungo</Option>
-            <Option onClick={() => setCategory(21)}>Proteína</Option>
+            <Option onClick={() => setCategoryValue(0)}>Outros</Option>
+            <Option onClick={() => setCategoryValue(1)}>Açúcares</Option>
+            <Option onClick={() => setCategoryValue(2)}>Bebidas</Option>
+            <Option onClick={() => setCategoryValue(3)}>Carnes</Option>
+            <Option onClick={() => setCategoryValue(4)}>Chocolates</Option>
+            <Option onClick={() => setCategoryValue(5)}>Condimentos</Option>
+            <Option onClick={() => setCategoryValue(6)}>Conservas</Option>
+            <Option onClick={() => setCategoryValue(7)}>Farinhas</Option>
+            <Option onClick={() => setCategoryValue(8)}>Frutas</Option>
+            <Option onClick={() => setCategoryValue(9)}>Verduras</Option>
+            <Option onClick={() => setCategoryValue(10)}>Gorduras</Option>
+            <Option onClick={() => setCategoryValue(11)}>Grãos</Option>
+            <Option onClick={() => setCategoryValue(12)}>Laticínios</Option>
+            <Option onClick={() => setCategoryValue(13)}>Legumes</Option>
+            <Option onClick={() => setCategoryValue(14)}>Líquidos</Option>
+            <Option onClick={() => setCategoryValue(15)}>Massas</Option>
+            <Option onClick={() => setCategoryValue(16)}>Molhos</Option>
+            <Option onClick={() => setCategoryValue(17)}>Pães</Option>
+            <Option onClick={() => setCategoryValue(18)}>Temperos</Option>
+            <Option onClick={() => setCategoryValue(19)}>Vegetais</Option>
+            <Option onClick={() => setCategoryValue(20)}>Fungo</Option>
+            <Option onClick={() => setCategoryValue(21)}>Proteína</Option>
           </Select>
         </div>
       </DialogBody>
@@ -249,7 +249,7 @@ export default function EditCard(req: createCardProps) {
         <Button
           variant="text"
           color="red"
-          onClick={req.handleOpen}
+          onClick={handleOpen}
           className="mr-2 py-4 rounded-md"
         >
           <span>Cancelar</span>
