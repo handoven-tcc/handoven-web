@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 // import { api } from '../pages/api/auth/authInterceptor.api'
 import { serialize } from "cookie";
 import axios from "axios";
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 
 interface AuthContextProviderProps {
   children: ReactNode;
@@ -28,6 +28,7 @@ export interface reqAuthenticate {
 interface AuthContextProps {
   authenticateUser: (reqUser: reqAuthenticate) => Promise<boolean>;
   createUser: (user: IUser) => Promise<any>;
+  isAdminUser: () => boolean;
 }
 export const api = axios.create({
   baseURL: process.env.URL_API ?? "", // Replace with your API base URL
@@ -55,6 +56,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     if (res.data) {
       setCookie("token", "token", { maxAge: 60 * 60 * 24 });
       setCookie("familyId", res.data.familyId, { maxAge: 60 * 60 * 24 });
+      setCookie("email", res.data.email, { maxAge: 60 * 60 * 24 });
       return true;
     }
     return false;
@@ -102,11 +104,20 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     return true;
   }
 
+  function isAdminUser(): boolean {
+    const email = getCookie("email");
+    if (email === "admin@admin.com") {
+      return true;
+    }
+    return false;
+  }
+
   return (
     <AuthContext.Provider
       value={{
         authenticateUser,
         createUser,
+        isAdminUser,
       }}
     >
       {children}
