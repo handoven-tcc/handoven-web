@@ -1,22 +1,34 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { AnyARecord } from "dns";
 import { ReactNode, useState } from "react";
-import { createContext } from "use-context-selector";
+import { createContext, useContextSelector } from "use-context-selector";
+import { AuthContext } from "./AuthContext";
 
 interface PlateContextProviderProps {
   children: ReactNode;
 }
 
-interface ISection {
-  igredients: {
-    igredientes_name: string;
-    igredients_quantity: number;
-    igredients_unit_measure: string;
-    igredients_category: number;
-    igredients_notes: string;
+export interface ISection {
+  ingredients: {
+    ingredients_name: string;
+    ingredients_quantity: number;
+    ingredients_unit_measure: string;
+    ingredients_category: number;
+    ingredients_notes: string;
   };
   prepare_mode: [];
   extras: [];
+}
+
+export class PlateRequest {
+  constructor(
+    public name: string,
+    public image: string,
+    public category: number,
+    public favorites: boolean,
+    public section: ISection,
+    public id?: string
+  ) {}
 }
 
 export interface IPlate {
@@ -44,11 +56,15 @@ interface PlateContextProps {
   aperitivos: IPlate[];
   vegetarianas: IPlate[];
   findPlates: (family: string) => Promise<void>;
+  createPlate: (request: IPlate) => Promise<void>;
 }
 
 export const PlateContext = createContext({} as PlateContextProps);
 
 export function PlateContextProvider({ children }: PlateContextProviderProps) {
+  const { isAdminUser } = useContextSelector(AuthContext, (context) => context);
+
+  const [loadingPlate, setLoadingPlate] = useState<boolean>(false);
   const [sobremesas, setSobremesas] = useState<IPlate[]>([]);
   const [saladas, setSaladas] = useState<IPlate[]>([]);
   const [sopas, setSopas] = useState<IPlate[]>([]);
@@ -65,31 +81,61 @@ export function PlateContextProvider({ children }: PlateContextProviderProps) {
   const [vegetarianas, setVegetarianas] = useState<IPlate[]>([]);
 
   async function findPlates(family: string): Promise<void> {
-    const res: any = await axios.get(
-      "https://handovenapi.onrender.com/plates",
-      {
+    setLoadingPlate(true);
+    try {
+      const { data }: AxiosResponse<IPlate[]> = await axios.get(
+        "https://handovenapi.onrender.com/plates",
+        {
+          headers: {
+            "X-HandOven-Family": family,
+            "X-HandOven-User": "111111111111111111111111",
+          },
+        }
+      );
+
+      setSobremesas(data.filter((o: IPlate) => o.category == 1));
+      setSaladas(data.filter((o: IPlate) => o.category == 2));
+      setSopas(data.filter((o: IPlate) => o.category == 3));
+      setOmeletes(data.filter((o: IPlate) => o.category == 4));
+      setAsiaticos(data.filter((o: IPlate) => o.category == 5));
+      setBrasileiro(data.filter((o: IPlate) => o.category == 6));
+      setRisotos(data.filter((o: IPlate) => o.category == 7));
+      setFrangos(data.filter((o: IPlate) => o.category == 8));
+      setMassas(data.filter((o: IPlate) => o.category == 9));
+      setPeixes(data.filter((o: IPlate) => o.category == 10));
+      setPizzas(data.filter((o: IPlate) => o.category == 11));
+      setBebidas(data.filter((o: IPlate) => o.category == 12));
+      setAperitivos(data.filter((o: IPlate) => o.category == 13));
+      setVegetarianas(data.filter((o: IPlate) => o.category == 14));
+
+      setLoadingPlate(false);
+    } catch (error) {
+      console.error(error);
+      setLoadingPlate(false);
+    }
+  }
+
+  async function createPlate(request: PlateRequest): Promise<any> {
+    if (!isAdminUser()) {
+      return;
+    }
+
+    setLoadingPlate(true);
+    try {
+      await axios.post("https://handovenapi.onrender.com/plates", request, {
         headers: {
-          "X-HandOven-Family": family,
+          "X-HandOven-Family": "111111111111111111111111",
           "X-HandOven-User": "111111111111111111111111",
         },
-      }
-    );
+      });
 
-    setSobremesas(res.data.filter((o: IPlate) => o.category == 1));
-    setSaladas(res.data.filter((o: IPlate) => o.category == 2));
-    setSopas(res.data.filter((o: IPlate) => o.category == 3));
-    setOmeletes(res.data.filter((o: IPlate) => o.category == 4));
-    setAsiaticos(res.data.filter((o: IPlate) => o.category == 5));
-    setBrasileiro(res.data.filter((o: IPlate) => o.category == 6));
-    setRisotos(res.data.filter((o: IPlate) => o.category == 7));
-    setFrangos(res.data.filter((o: IPlate) => o.category == 8));
-    setMassas(res.data.filter((o: IPlate) => o.category == 9));
-    setPeixes(res.data.filter((o: IPlate) => o.category == 10));
-    setPizzas(res.data.filter((o: IPlate) => o.category == 11));
-    setBebidas(res.data.filter((o: IPlate) => o.category == 12));
-    setAperitivos(res.data.filter((o: IPlate) => o.category == 13));
-    setVegetarianas(res.data.filter((o: IPlate) => o.category == 14));
+      setLoadingPlate(false);
+    } catch (error) {
+      console.error(error);
+      setLoadingPlate(false);
+    }
   }
+
   return (
     <PlateContext.Provider
       value={{
@@ -108,6 +154,7 @@ export function PlateContextProvider({ children }: PlateContextProviderProps) {
         aperitivos,
         vegetarianas,
         findPlates,
+        createPlate,
       }}
     >
       {children}

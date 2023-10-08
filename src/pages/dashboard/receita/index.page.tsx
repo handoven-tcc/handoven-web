@@ -4,12 +4,13 @@ import { MagnifyingGlass } from "phosphor-react";
 import { Header } from "../../../components/Header";
 import { useKeenSlider } from "keen-slider/react";
 import { PlateItem } from "../../../components/PlateItem";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
 import { useContextSelector } from "use-context-selector";
 import { PlateContext } from "../../../contexts/PlateContext";
 import { INextApi } from "../../../types";
 import { AuthContext } from "../../../contexts/AuthContext";
+import CreatePlate from "./components/createPlate/index.page";
 
 export default function ReceitaPage() {
   const {
@@ -32,6 +33,7 @@ export default function ReceitaPage() {
     return context;
   });
   const { isAdminUser } = useContextSelector(AuthContext, (context) => context);
+  const [openCreatePlate, setOpenCreatePlate] = useState<boolean>(false);
 
   const familyId = getCookie("familyId") ?? "";
 
@@ -134,15 +136,20 @@ export default function ReceitaPage() {
     },
   });
 
-  function handleCreatePlate() {
-    console.log("opa");
+  function handleOpenCreatePlate() {
+    setOpenCreatePlate(!open);
   }
+
+  // TODO: fazer editar plate
+  // function handleOpenEditPlate() {
+  //   setOpenCreatePlate(!open);
+  // }
 
   useEffect(() => {
     (async () => {
       await findPlates(familyId);
     })();
-  });
+  }, []);
 
   return (
     <div className="">
@@ -164,7 +171,7 @@ export default function ReceitaPage() {
                 variant="gradient"
                 color="red"
                 className="ml-4 w-[15rem] bg-red-500"
-                onClick={handleCreatePlate}
+                onClick={handleOpenCreatePlate}
               >
                 Adicionar Receita
               </Button>
@@ -533,6 +540,9 @@ export default function ReceitaPage() {
           </div>
         </div>
       </div>
+      <CreatePlate open={openCreatePlate} handleOpen={handleOpenCreatePlate} />
+      {/* TODO: fazer editar plate */}
+      {/* <EditPlate open={openEditPlate} handleOpen={handleOpenEditPlate} /> */}
     </div>
   );
 }

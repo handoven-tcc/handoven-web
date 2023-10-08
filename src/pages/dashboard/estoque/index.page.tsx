@@ -81,7 +81,7 @@ export default function EstoquePage() {
 
   useEffect(() => {
     findProducts(familyId);
-  });
+  }, []);
 
   return (
     <div>
