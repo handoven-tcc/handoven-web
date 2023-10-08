@@ -1,5 +1,5 @@
 "use client";
-import { Input } from "@material-tailwind/react";
+import { Button, Input } from "@material-tailwind/react";
 import { MagnifyingGlass } from "phosphor-react";
 import { Header } from "../../../components/Header";
 import { useKeenSlider } from "keen-slider/react";
@@ -9,6 +9,7 @@ import { getCookie } from "cookies-next";
 import { useContextSelector } from "use-context-selector";
 import { PlateContext } from "../../../contexts/PlateContext";
 import { INextApi } from "../../../types";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 export default function ReceitaPage() {
   const {
@@ -30,6 +31,7 @@ export default function ReceitaPage() {
   } = useContextSelector(PlateContext, (context) => {
     return context;
   });
+  const { isAdminUser } = useContextSelector(AuthContext, (context) => context);
 
   const familyId = getCookie("familyId") ?? "";
 
@@ -132,6 +134,10 @@ export default function ReceitaPage() {
     },
   });
 
+  function handleCreatePlate() {
+    console.log("opa");
+  }
+
   useEffect(() => {
     (async () => {
       await findPlates(familyId);
@@ -146,12 +152,24 @@ export default function ReceitaPage() {
           <h1 className="font-bold pt-4 text-red-500 text-4xl font-default ">
             Encontre sua receita favorita
           </h1>
-          <Input
-            className=""
-            label="Pesquise por Receitas"
-            color="red"
-            icon={<MagnifyingGlass />}
-          />
+          <div className="flex align-items-center justify-content-between">
+            <Input
+              label="Pesquise por Receitas"
+              color="red"
+              icon={<MagnifyingGlass />}
+            />
+
+            {isAdminUser() && (
+              <Button
+                variant="gradient"
+                color="red"
+                className="ml-4 w-[15rem] bg-red-500"
+                onClick={handleCreatePlate}
+              >
+                Adicionar Receita
+              </Button>
+            )}
+          </div>
         </div>
         <div className="flex flex-col items-start justify-center">
           {sobremesas && sobremesas.length ? (
