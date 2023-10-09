@@ -106,19 +106,16 @@ export default function EstoquePage() {
 
   async function findProducts(family: string): Promise<void> {
     try {
-      console.log(count)
-      if (count > 1) {
         await findProductsByFamily(family);
-        setCount(count + 1);
       }
-    } catch (err) {
+     catch (err) {
       console.log("find" + err);
     }
   }
 
   useEffect(() => {
     findProducts(familyId);
-  }, []);
+  });
 
   return (
     <div>

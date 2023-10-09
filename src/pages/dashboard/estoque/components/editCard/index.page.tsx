@@ -76,12 +76,13 @@ export default function EditCard({ amount,category,cost,expiryProduct,handleOpen
 
   useEffect(() => {
     const fetchRepos = async () => {
+      
       const result = await setField();
-      handleOpen();
       const date = result.validity.slice(0, 10).split("-").reverse().join("/");
       result.validity = date;
-
+      
       setDefaultProductValue(result);
+      handleOpen();
     };
 
     fetchRepos();
