@@ -1,10 +1,10 @@
 import { useAuth } from "../../providers/Auth";
 
 const Home = () => {
-  const { setToken } = useAuth();
+  const { logout } = useAuth();
 
   const handleLogout = () => {
-    setToken("");
+    logout();
   };
 
   return (
