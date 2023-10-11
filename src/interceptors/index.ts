@@ -6,15 +6,15 @@ export const api = axios.create({
 });
 
 const authRequestInterceptor = (config: InternalAxiosRequestConfig) => {
-  const {token, userId, familyId} = useAuth();
+  const {getToken, getUserId, getFamilyId} = useAuth();
 
   if (!config.headers) {
     config.headers = {} as AxiosRequestHeaders
   }
 
-  if (token) {
-    config.headers.set("X-Handoven-User", userId)
-    config.headers.set("X-Handoven-Family", familyId)
+  if (getToken()) {
+    config.headers.set("X-Handoven-User", getUserId())
+    config.headers.set("X-Handoven-Family", getFamilyId())
     config.headers.set("X-Handoven-Service", false)
   }
 
