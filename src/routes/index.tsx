@@ -6,7 +6,7 @@ import PublicRoutes from "./PublicRoute";
 import PrivateRoutes from "./PrivateRoute";
 import Home from "../pages/Home";
 import Plates from "../pages/Plates";
-import PlatesId from "../pages/PlatesId";
+import PlateId from "../pages/PlateId";
 import Products from "../pages/Products";
 import ProductsId from "../pages/ProductsId";
 import Dashboard from "../pages/Dashboard";
@@ -25,7 +25,7 @@ const Router = () => {
         <Route element={<PrivateRoutes />}>
           <Route path="/home" element={<Home />} />
           <Route path="/receitas" element={<Plates />} />
-          <Route path="/receitas/:id" element={<PlatesId />} />
+          <Route path="/receitas/:id" element={<PlateId />} />
           <Route path="/estoque" element={<Products />} />
           <Route path="/estoque/:id" element={<ProductsId />} />
           <Route path="/dashboard" element={<Dashboard />} />

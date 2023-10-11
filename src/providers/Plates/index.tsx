@@ -10,6 +10,7 @@ interface IPlatesProviderProps {
 
 interface IPlatesProviderData {
   getPlates: () => void;
+  getProductById: (id: string) => Promise<IPlate>;
   createPlate: (request: PlateRequest) => void;
   sobremesas: IPlate[];
   saladas: IPlate[];
@@ -88,6 +89,20 @@ export const PlatesProvider = ({ children }: IPlatesProviderProps) => {
     }
   };
 
+  const getProductById = async (id: string): Promise<IPlate> => {
+    setIsLoadingPlate(true);
+    try {
+      const { data }: AxiosResponse<IPlate> = await api.get(`plates/${id}`);
+
+      setIsLoadingPlate(false);
+      return data;
+    } catch (error) {
+      console.error(error);
+      setIsLoadingPlate(false);
+      return {} as IPlate;
+    }
+  };
+
   const createPlate = async (request: PlateRequest) => {
     if (!isAdminUser()) {
       return;
@@ -108,6 +123,7 @@ export const PlatesProvider = ({ children }: IPlatesProviderProps) => {
     <PlatesContext.Provider
       value={{
         getPlates,
+        getProductById,
         createPlate,
         sobremesas,
         saladas,
