@@ -10,6 +10,7 @@ import React, { useRef, useState } from "react";
 import * as Toast from "@radix-ui/react-toast";
 import { useAuth } from "../../providers/Auth";
 import { LoginRequest } from "../../models";
+import { useNavigate } from "react-router-dom";
 
 export interface IUser {
   id: string;
@@ -36,6 +37,7 @@ const submitLoginFormSchema = z.object({
 type SubmitLoginForm = z.infer<typeof submitLoginFormSchema>;
 
 const Login = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,16 +53,17 @@ const Login = () => {
     resolver: zodResolver(submitLoginFormSchema),
   });
 
-  function handleGuest() {
+  const handleGuest = () => {
     setToken("token");
+    navigate("/home");
     // setCookie("token", "token", { maxAge: 60 * 60 * 24 });
-  }
+  };
 
   // async function handleConnectGoogle() {
   //   await signIn("google");
   // }
 
-  async function handleLogin(e: React.FormEvent) {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
@@ -78,7 +81,7 @@ const Login = () => {
       setMessage("Email ou senha inválidos");
       console.log("[LOGIN_ERROR]: ", error);
     }
-  }
+  };
   React.useEffect(() => {
     return () => clearTimeout(timerRef.current);
   }, []);
@@ -271,7 +274,7 @@ const Login = () => {
                 </div>
 
                 <div className="pt-3 flex flex-col">
-                  <a href="/register">
+                  <a onClick={() => navigate("/register")}>
                     <span className="text-black font-default text-sm">
                       Não tem uma conta?{" "}
                       <strong className="font-default text-sm text-red-500 hover:text-red-900 font-bold">
@@ -280,7 +283,6 @@ const Login = () => {
                     </span>
                   </a>
                   <a
-                    href={"/home"}
                     className="mt-2 font-normal text-sm text-black"
                     onClick={handleGuest}
                   >

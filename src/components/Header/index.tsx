@@ -9,8 +9,11 @@ import {
 import logo from "../../assets/logo.svg";
 import { BowlFood, Carrot } from "@phosphor-icons/react";
 import { FolderOpen, Gear, Heart, User, UsersThree } from "phosphor-react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   const [openRight, setOpenRight] = React.useState(false);
 
   const openDrawerRight = () => setOpenRight(true);
@@ -31,15 +34,24 @@ const Header = () => {
         </span>
 
         <div className="flex items-center justify-center gap-5 pl-10">
-          <a href="/dashboard" className=" hover:text-gray-700 duration-300">
+          <a
+            onClick={() => navigate("/dashboard")}
+            className=" hover:text-gray-700 duration-300"
+          >
             <h3>Relatorio</h3>
           </a>
 
-          <a href="/estoque" className="hover:text-gray-700 duration-300">
+          <a
+            onClick={() => navigate("/estoque")}
+            className="hover:text-gray-700 duration-300"
+          >
             Estoque{" "}
           </a>
 
-          <a href="/receitas" className="hover:text-gray-700 duration-300">
+          <a
+            onClick={() => navigate("/receitas")}
+            className="hover:text-gray-700 duration-300"
+          >
             Receita
           </a>
         </div>

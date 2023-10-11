@@ -1,5 +1,6 @@
 import { Button } from "@material-tailwind/react";
 import { ArrowRight, Heart } from "phosphor-react";
+import { useNavigate } from "react-router-dom";
 
 interface IPlateItem {
   img: string;
@@ -15,6 +16,7 @@ const isDisabled = (id: string) => {
 };
 
 const PlateItem = ({ img, name, id }: IPlateItem) => {
+  const navigate = useNavigate();
   return (
     <div>
       <a href="#!">
@@ -37,7 +39,7 @@ const PlateItem = ({ img, name, id }: IPlateItem) => {
         </div>
         <div className="flex p-2">
           <a href="#buttons-with-link">
-            <a href={`../receita/${id}`} key={id}>
+            <a onClick={() => navigate(`/receita/${id}`)} key={id}>
               <Button
                 disabled={isDisabled(id)}
                 variant="gradient"

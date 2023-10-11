@@ -15,9 +15,11 @@ import React, { useRef, useState } from "react";
 import * as Toast from "@radix-ui/react-toast";
 import { useAuth } from "../../providers/Auth";
 import { UserRequest } from "../../models";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { createUser } = useAuth();
+  const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -288,7 +290,7 @@ const Register = () => {
               <span className="text-black font-default text-sm">
                 Já tem uma conta?{" "}
                 <a
-                  href="/login"
+                  onClick={() => navigate("/login")}
                   className="font-default text-sm text-red-500 hover:text-red-900 font-bold"
                 >
                   Entre aqui

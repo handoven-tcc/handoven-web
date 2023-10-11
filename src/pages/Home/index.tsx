@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import estoque from "../../assets/estoque.svg";
 import receita from "../../assets/receitas.svg";
 import relatorio from "../../assets/relatorio.svg";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex items-center flex-col justify-center w-[100wh] h-[80vh]">
       <h1 className="font-bold text-6xl font-default text-red-500 pt-20 ">
@@ -11,7 +13,7 @@ const Home = () => {
 
       <div className="grid grid-cols-3 pt-14 px-8 gap-4">
         <a
-          href="../receitas"
+          onClick={() => navigate("/receitas")}
           className="w-[420px] h-[350px] flex items-center justify-center justify-items-center flex-col border-gray-300 border p-5 rounded-lg hover:shadow-3xl "
         >
           <img src={receita} alt="" width={200} height={700} className="pt-8" />
@@ -23,7 +25,7 @@ const Home = () => {
           <span className="pt-4">Faça as melhores receita aqui.</span>
         </a>
         <a
-          href="../estoque"
+          onClick={() => navigate("/estoque")}
           className="w-[420px] h-[350px] flex items-center justify-center justify-items-center flex-col border-gray-300 border p-5 rounded-lg hover:shadow-3xl "
         >
           <img src={estoque} alt="" width={170} height={150} />
@@ -35,7 +37,7 @@ const Home = () => {
           <span className="pt-4">Edite seu Estoque do seu jeito.</span>
         </a>
         <a
-          href="../dashboard"
+          onClick={() => navigate("/dashboard")}
           className=" w-[420px] h-[350px] flex items-center justify-center justify-items-center flex-col border-gray-300 border p-5 rounded-lg hover:shadow-3xl "
         >
           <img
