@@ -39,7 +39,7 @@ const PlateItem = ({ img, name, id }: IPlateItem) => {
         </div>
         <div className="flex p-2">
           <a>
-            <a onClick={() => navigate(`/receita/${id}`)} key={id}>
+            <a onClick={() => navigate(`/receitas/${id}`)} key={id}>
               <Button
                 disabled={isDisabled(id)}
                 variant="gradient"
