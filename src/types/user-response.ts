@@ -10,4 +10,4 @@ interface IUserResponse {
   updatedAt: string;
 }
 
-export {type IUserResponse}
+export { type IUserResponse };

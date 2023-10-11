@@ -19,4 +19,4 @@ interface ISection {
   extras: [];
 }
 
-export {type IPlate, type ISection}
+export { type IPlate, type ISection };

@@ -6,7 +6,6 @@ export class UserRequest {
     public cell: string,
     public familyName: string,
     public password: string,
-    public familyId?: string,
-  ) {
-  }
+    public familyId?: string
+  ) {}
 }

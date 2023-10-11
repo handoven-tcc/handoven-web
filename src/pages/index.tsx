@@ -1,13 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 const Pages = () => {
-  return (
-    <>
-      {/* <Header></Header> */}
-      <Outlet></Outlet>
-      {/* <Footer></Footer> */}
-    </>
-  );
+  return <Outlet></Outlet>;
 };
 
 export default Pages;

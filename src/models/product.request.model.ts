@@ -9,7 +9,6 @@ export class ProductRequest {
     public unitMeasure: string,
     public familyId: string,
     public expiryProduct: boolean,
-    public id?: string,
-  ) {
-  }
+    public id?: string
+  ) {}
 }

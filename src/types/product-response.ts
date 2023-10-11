@@ -11,4 +11,4 @@ interface IProduct {
   expiryProduct: boolean;
 }
 
-export {type IProduct}
+export { type IProduct };

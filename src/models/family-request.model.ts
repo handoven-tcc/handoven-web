@@ -1,5 +1,3 @@
 export class FamilyRequest {
-  constructor(public name: string) {
-
-  }
+  constructor(public name: string) {}
 }

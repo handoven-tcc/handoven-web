@@ -1,4 +1,4 @@
-import {ISection} from "../types";
+import { ISection } from "../types";
 
 export class PlateRequest {
   constructor(
@@ -8,6 +8,5 @@ export class PlateRequest {
     public favorites: boolean,
     public section: ISection,
     public id?: string
-  ) {
-  }
+  ) {}
 }

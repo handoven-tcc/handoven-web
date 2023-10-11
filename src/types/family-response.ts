@@ -5,4 +5,4 @@ interface IFamilyResponse {
   updatedAt: string;
 }
 
-export {type IFamilyResponse}
+export { type IFamilyResponse };

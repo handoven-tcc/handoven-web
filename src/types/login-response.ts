@@ -7,4 +7,4 @@ interface ILoginResponse {
   familyId: string;
 }
 
-export {type ILoginResponse};
+export { type ILoginResponse };
