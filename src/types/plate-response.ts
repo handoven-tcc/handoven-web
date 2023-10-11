@@ -14,7 +14,7 @@ interface ISection {
     ingredients_unit_measure: string;
     ingredients_category: number;
     ingredients_notes: string;
-  };
+  }[];
   prepare_mode: [];
   extras: [];
 }
