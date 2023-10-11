@@ -21,7 +21,7 @@ import Header from "../../components/Header";
 
 const Profile = () => {
   const [openTab, setOpenTab] = useState(1);
-  const [email, setEmail] = useState("");
+  const [email, _] = useState("");
   const { countries } = useCountries();
   const [country, setCountry] = useState(0);
   const { name, flags, countryCallingCode } = countries[country];
