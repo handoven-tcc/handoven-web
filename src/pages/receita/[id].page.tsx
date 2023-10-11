@@ -9,6 +9,8 @@ import { ICategory, IPlate, ISection } from "../../contexts/PlateContext";
 import { GetServerSideProps } from "next";
 import { Header } from "../../components/Header";
 import { Button } from "@material-tailwind/react";
+import { Circle } from "phosphor-react";
+import { useEffect, useState } from "react";
 
 interface INext {
   req: NextRequest,
@@ -25,6 +27,14 @@ interface PlateProps {
 
 
 export default function Receita({ plate }: PlateProps) {
+  const [ pageYPosition, setPageYPosition ] = useState(0);
+
+  function getPageYAfterScroll(){
+    window.scrollTo(4000, 4000);
+  }
+  useEffect(() => {
+  }, []);
+  
   return (
     <div className="">
       <Header/>
@@ -53,32 +63,52 @@ export default function Receita({ plate }: PlateProps) {
           <Button
           className="mt-4"
           color="yellow"
+          onClick={getPageYAfterScroll}
           >
             Ver Mais
           </Button>
           </div>
         </div>
         </div>
-          <div className="flex justify-betweeb">
+          <div className="flex justify-between h-full">
 
-        <div className=" border-black rounded-md border ">
+        <div className=" border-black rounded-lg text-xl border text-bold p-6 mb-4 ml-8 w-5/12 h-6/6">
           <h1>
             Igredientes
           </h1>
-          {
-              console.log(plate.section.igredients),
-             plate.section.igredients?.map((igrediente:ICategory) => {
-                return (
-                  <h2 className="pt-6 text-xl" key={igrediente._id}>
-                  {igrediente.igredients_name}
-                  </h2>
-            )
-            }) 
-          }
+          <ul>
 
+          {
+            plate.section.ingredients?.map((igrediente:ICategory) => {
+              return (
+                <li key={igrediente._index} className="pt-6 list-disc list-outside list flex items-center justify-start gap-1">
+                  <Circle size={8} weight="fill" className="mb-0.5"/>
+                <h2 className=" text-md" key={igrediente._id}>
+                     { igrediente.ingredients_quantity + " " + igrediente.ingredients_unit_measure +" de "+ igrediente.ingredients_name}
+                  </h2>
+                </li>
+            )
+          }) 
+        }
+        </ul>
         </div>
-        <div className=" border-black rounded-md border ">
-          alo alo
+        <div className="border-black rounded-md border mr-8 mb-4 w-5/12 p-6">
+        <div className="rounded-lg text-xl text-bold">
+          <h1>
+            Modo de Preparo
+          </h1>
+          </div>
+        {
+            plate.section.prepare_mode.map((step:string) => {
+              return (
+                <li key={step} className="pt-6 list-disc list-outside list flex items-center justify-start gap-1">
+                <h2 className=" text-md" key={step}>
+                     { step }
+                  </h2>
+                </li>
+            )
+          }) 
+        }
         </div>
           </div>
     </div>
