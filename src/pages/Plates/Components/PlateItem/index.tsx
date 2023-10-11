@@ -19,7 +19,7 @@ const PlateItem = ({ img, name, id }: IPlateItem) => {
   const navigate = useNavigate();
   return (
     <div>
-      <a href="#!">
+      <a>
         <img
           className="rounded-t-lg w-48 h-32 "
           src={`data:image/png;base64,${img}`}
@@ -38,7 +38,7 @@ const PlateItem = ({ img, name, id }: IPlateItem) => {
           <Heart size={32} color="#d40b03" />
         </div>
         <div className="flex p-2">
-          <a href="#buttons-with-link">
+          <a>
             <a onClick={() => navigate(`/receita/${id}`)} key={id}>
               <Button
                 disabled={isDisabled(id)}

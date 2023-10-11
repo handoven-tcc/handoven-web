@@ -251,10 +251,7 @@ const Login = () => {
                       className=""
                       crossOrigin={undefined}
                     />
-                    <a
-                      href="#"
-                      className="text-black font-default text-sm hover:underline "
-                    >
+                    <a className="text-black font-default text-sm hover:underline ">
                       Esqueci a senha?
                     </a>
                   </div>
