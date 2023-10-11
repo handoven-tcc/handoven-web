@@ -1,7 +1,7 @@
 import logo from "../../assets/logo.svg";
 import cozinhando from "../../assets/cozinhando.svg";
 import wave from "../../assets/wave.png";
-import { User, LockKey, FacebookLogo, GoogleLogo, X } from "phosphor-react";
+import { User, LockKey, FacebookLogo, X } from "phosphor-react";
 import { Input, Checkbox, Typography, Alert } from "@material-tailwind/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -46,7 +46,6 @@ const Login = () => {
 
   const {
     register,
-    handleSubmit,
     formState: { errors },
   } = useForm<SubmitLoginForm>({
     resolver: zodResolver(submitLoginFormSchema),
@@ -66,7 +65,7 @@ const Login = () => {
 
     try {
       const request = new LoginRequest(email, password);
-      const response = await login(request);
+      await login(request);
 
       // console.log("[LOGIN_RESPONSE]: ", response);
 
