@@ -128,7 +128,7 @@ const Plates = () => {
     (async () => {
       await getPlates();
     })();
-  });
+  }, []);
 
   return (
     <div className="">
