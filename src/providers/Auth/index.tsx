@@ -10,12 +10,14 @@ interface IAuthProviderProps {
 interface IAuthProviderData {
   login: (request: LoginRequest) => void;
   createUser: (request: UserRequest) => void;
-  isAdminUser: () => boolean;
   logout: () => void;
-  token: string;
-  userId: string;
-  email: string;
-  familyId: string;
+  isAdminUser: () => boolean;
+  isAuthenticatedUser: () => boolean;
+  getToken: () => string;
+  getEmail: () => string;
+  getUserId: () => string;
+  getFamilyId: () => string;
+  setToken: (value: string) => void;
   isLoadingAuth: boolean;
 }
 
@@ -29,10 +31,6 @@ export const AuthContext = createContext<IAuthProviderData>(
 
 export const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(false);
-  const [token, setToken] = useState<string>("");
-  const [userId, setUserId] = useState<string>("");
-  const [familyId, setFamilyId] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
 
   const login = async (request: LoginRequest) => {
     setIsLoadingAuth(true);
@@ -50,10 +48,10 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
         }
       );
 
-      setUserId(data.id);
-      setFamilyId(data.familyId);
-      setEmail(data.email);
-      setToken("token");
+      window.localStorage.setItem("userId", data.id);
+      window.localStorage.setItem("familyId", data.familyId);
+      window.localStorage.setItem("token", "token");
+      window.localStorage.setItem("email", data.email);
       setIsLoadingAuth(false);
     } catch (error) {
       console.error(error);
@@ -79,10 +77,10 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
           },
         }
       );
-      setToken("token");
-      setUserId(data.id);
-      setFamilyId(data.familyId);
-      setEmail(data.email);
+      window.localStorage.setItem("userId", data.id);
+      window.localStorage.setItem("familyId", data.familyId);
+      window.localStorage.setItem("email", data.email);
+      window.localStorage.setItem("token", "token");
       setIsLoadingAuth(false);
     } catch (error) {
       console.error(error);
@@ -109,7 +107,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
         }
       );
       family = data;
-      setFamilyId(data.id);
+      window.localStorage.setItem("familyId", data.id);
       setIsLoadingAuth(false);
     } catch (error) {
       console.error(error);
@@ -120,15 +118,42 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
   };
 
   const logout = () => {
-    setUserId("");
-    setFamilyId("");
-    setEmail("");
-    setToken("");
+    window.localStorage.removeItem("userId");
+    window.localStorage.removeItem("familyId");
+    window.localStorage.removeItem("token");
+    window.localStorage.removeItem("email");
+  };
+
+  const getEmail = (): string => {
+    return window.localStorage.getItem("email") as string;
+  };
+
+  const getToken = (): string => {
+    return window.localStorage.getItem("token") as string;
+  };
+
+  const getUserId = (): string => {
+    return window.localStorage.getItem("userId") as string;
+  };
+
+  const getFamilyId = (): string => {
+    return window.localStorage.getItem("familyId") as string;
+  };
+
+  const setToken = (value: string): void => {
+    window.localStorage.setItem("token", value);
+  };
+
+  const isAuthenticatedUser = (): boolean => {
+    if (!getEmail().length && !getToken().length) {
+      return false;
+    }
+    return true;
   };
 
   const isAdminUser = (): boolean => {
     const emailAdmin = import.meta.env.VITE_ADMIN_EMAIL as string;
-    return email === emailAdmin;
+    return getEmail() === emailAdmin;
   };
 
   return (
@@ -137,12 +162,14 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
         login,
         createUser,
         logout,
-        isAdminUser,
-        token,
-        userId,
-        familyId,
-        email,
         isLoadingAuth,
+        isAdminUser,
+        getEmail,
+        getToken,
+        getUserId,
+        getFamilyId,
+        setToken,
+        isAuthenticatedUser,
       }}
     >
       {children}
