@@ -21,10 +21,12 @@ import {
   Heart,
   Newspaper,
   Plus,
+  SignOut,
   User,
   Users,
   UsersThree,
 } from "phosphor-react";
+import { deleteCookie } from "cookies-next";
 
 export function Header() {
   const [openRight, setOpenRight] = React.useState(false);
@@ -143,7 +145,7 @@ export function Header() {
           </IconButton>
         </div>
 
-        <div className="px-4 flex flex-col gap-2">
+        <div className="px-4 flex flex-col gap-2 h-full">
           <div>
             <Link
               href=""
@@ -160,14 +162,14 @@ export function Header() {
             </Link>
 
             <Link
-              href=""
+              href="../dashboard/receita"
               className="flex gap-2 hover:bg-gray-100 p-2 rounded-sm duration-300"
             >
               <BowlFood size={20} color="#3c5654" /> Receitas
             </Link>
 
             <Link
-              href=""
+              href="../dashboard/estoque"
               className="flex gap-2 hover:bg-gray-100 p-2 rounded-sm duration-300"
             >
               <Carrot size={20} color="#3c5654" /> Estoque
@@ -186,11 +188,22 @@ export function Header() {
               <UsersThree size={20} color="#3c5654" /> Família
             </Link>
             <Link
-              href=""
+              href="../acc/config"
               className="flex gap-2 hover:bg-gray-100 p-2 rounded-sm duration-300"
             >
               <Gear size={20} color="#3c5654" /> Configuração
             </Link>
+            <div className="flex h-full items-center pt-16 w-full">
+
+            <Link
+              href="../login"
+              className="flex gap-2 hover:bg-gray-100 p-2 duration-300 w-full rounded-sm"
+              onClick={() => { deleteCookie('token'), deleteCookie('familyId') }}
+              >
+              <SignOut size={20} color="#3c5654" /> Sair
+            </Link>
+              </div>
+            
           </div>
         </div>
       </Drawer>

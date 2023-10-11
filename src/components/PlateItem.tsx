@@ -3,7 +3,7 @@ import { useKeenSlider } from "keen-slider/react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Heart } from "phosphor-react";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 interface IPlateItem {
   img: string;
@@ -19,6 +19,9 @@ function isDisabled(id: string) {
 
 
 export function PlateItem({ img, name, id }: IPlateItem) {
+
+  const [ favorited, setFavorited ] = useState(false)
+
   return (
     <div>
       <a href="#!">
@@ -37,7 +40,17 @@ export function PlateItem({ img, name, id }: IPlateItem) {
       </div>
       <div className="flex justify-between">
         <div className="flex gap-1 items-center p-2 ">
-          <Heart size={32} color="#d40b03" />
+          {
+            favorited ? (
+              
+          <a className="cursor-pointer" onClick={() => (setFavorited(false))}>
+          <Heart size={32} color="#d40b03" weight="fill" />
+          </a>
+            ) :     
+          <a className="cursor-pointer" onClick={() => (setFavorited(true))}>
+          <Heart size={32} color="#d40b03"/>
+          </a>
+          }
         </div>
         <div className="flex p-2">
           <a href="#buttons-with-link">
