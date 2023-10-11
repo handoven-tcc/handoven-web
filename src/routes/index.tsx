@@ -10,6 +10,7 @@ import PlatesId from "../pages/PlatesId";
 import Products from "../pages/Products";
 import ProductsId from "../pages/ProductsId";
 import Dashboard from "../pages/Dashboard";
+import Profile from "../pages/Profile";
 
 const Router = () => {
   return (
@@ -23,12 +24,12 @@ const Router = () => {
 
         <Route element={<PrivateRoutes />}>
           <Route path="/home" element={<Home />} />
-          <Route path="/plates" element={<Plates />} />
-          <Route path="/plates/:id" element={<PlatesId />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<ProductsId />} />
+          <Route path="/receitas" element={<Plates />} />
+          <Route path="/receitas/:id" element={<PlatesId />} />
+          <Route path="/estoque" element={<Products />} />
+          <Route path="/estoque/:id" element={<ProductsId />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Home />} />
+          <Route path="/perfil" element={<Profile />} />
         </Route>
       </Route>
     </Routes>
