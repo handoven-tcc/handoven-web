@@ -1,7 +1,6 @@
 import estoque from "../../assets/estoque.svg";
 import receita from "../../assets/receitas.svg";
 import relatorio from "../../assets/relatorio.svg";
-import { useEffect, useState } from "react";
 
 const Home = () => {
   return (
@@ -12,7 +11,7 @@ const Home = () => {
 
       <div className="grid grid-cols-3 pt-14 px-8 gap-4">
         <a
-          href="../receita"
+          href="../receitas"
           className="w-[420px] h-[350px] flex items-center justify-center justify-items-center flex-col border-gray-300 border p-5 rounded-lg hover:shadow-3xl "
         >
           <img src={receita} alt="" width={200} height={700} className="pt-8" />
