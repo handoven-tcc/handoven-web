@@ -1,4 +1,9 @@
-import axios, { AxiosResponse } from "axios";
+import axios, {
+  AxiosInstance,
+  AxiosRequestHeaders,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
 import { ReactNode, createContext, useContext, useState } from "react";
 import { FamilyRequest, LoginRequest, UserRequest } from "../../models";
 import { IFamilyResponse, ILoginResponse, IUserResponse } from "../../types";
@@ -19,9 +24,10 @@ interface IAuthProviderData {
   getFamilyId: () => string;
   setToken: (value: string) => void;
   isLoadingAuth: boolean;
+  api: AxiosInstance;
 }
 
-export const api = axios.create({
+export const _api = axios.create({
   baseURL: import.meta.env.VITE_URL_API as string,
 });
 
@@ -32,10 +38,31 @@ export const AuthContext = createContext<IAuthProviderData>(
 export const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(false);
 
+  const api = axios.create({
+    baseURL: import.meta.env.VITE_URL_API as string,
+  });
+
+  const authRequestInterceptor = (config: InternalAxiosRequestConfig) => {
+    if (!config.headers) {
+      config.headers = {} as AxiosRequestHeaders;
+    }
+
+    if (getToken()) {
+      config.headers.set("X-Handoven-User", getUserId());
+      config.headers.set("X-Handoven-Family", getFamilyId());
+      config.headers.set("X-Handoven-Service", false);
+    }
+
+    config.headers.Accept = "application/json";
+    return config;
+  };
+
+  api.interceptors.request.use(authRequestInterceptor);
+
   const login = async (request: LoginRequest) => {
     setIsLoadingAuth(true);
     try {
-      const { data }: AxiosResponse<ILoginResponse> = await api.post(
+      const { data }: AxiosResponse<ILoginResponse> = await _api.post(
         "user/login",
         request,
         {
@@ -65,7 +92,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     request.familyId = family.id;
     setIsLoadingAuth(true);
     try {
-      const { data }: AxiosResponse<IUserResponse> = await api.post(
+      const { data }: AxiosResponse<IUserResponse> = await _api.post(
         "user/addUser",
         request,
         {
@@ -94,7 +121,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     setIsLoadingAuth(true);
     let family;
     try {
-      const { data }: AxiosResponse<IFamilyResponse> = await api.post(
+      const { data }: AxiosResponse<IFamilyResponse> = await _api.post(
         "family",
         request,
         {
@@ -170,6 +197,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
         getFamilyId,
         setToken,
         isAuthenticatedUser,
+        api,
       }}
     >
       {children}
