@@ -1,6 +1,33 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
   "routes": [
+    {
+      "src": "/",
+      "dest": "/"
+    },
+    {
+      "src": "/home",
+      "dest": "/home"
+    },
+    {
+      "src": "/receitas",
+      "dest": "/receitas"
+    },
+    {
+      "src": "/estoque",
+      "dest": "/estoque"
+    },
+    {
+      "src": "/estoque/(.*)",
+      "dest": "/estoque/$1"
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/dashboard"
+    },
+    {
+      "src": "/perfil",
+      "dest": "/perfil"
+    },
     {
       "src": "/receitas/(.*)",
       "dest": "/receitas/$1"
