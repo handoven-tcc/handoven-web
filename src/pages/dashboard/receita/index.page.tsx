@@ -187,6 +187,7 @@ export default function ReceitaPage() {
                       img={sobremesa.image}
                       name={sobremesa.name}
                       id={sobremesa.id + ""}
+
                     />
                   </div>
                 ))
@@ -210,7 +211,7 @@ export default function ReceitaPage() {
                         key={index}
                         img={salada.image}
                         name={salada.name}
-                        id={salada.id}
+                        id={salada.id + ""}
                       />
                     </div>
                   ))

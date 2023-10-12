@@ -72,6 +72,7 @@ export default function EditCard({ amount,category,cost,expiryProduct,handleOpen
   const { updateProduct } = useContextSelector(ProductContext, (context) => {
     return context;
   });
+  const [ count, setCount ] = useState(0)
   const familyId = getCookie("familyId") ?? "";
 
   useEffect(() => {
@@ -82,7 +83,11 @@ export default function EditCard({ amount,category,cost,expiryProduct,handleOpen
       result.validity = date;
       
       setDefaultProductValue(result);
-      handleOpen();
+      if(count > 0) {
+
+        handleOpen();
+      }
+      setCount(count + 1)
     };
 
     fetchRepos();
