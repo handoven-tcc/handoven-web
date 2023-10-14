@@ -72,7 +72,6 @@ export default function EditCard({ amount,category,cost,expiryProduct,handleOpen
   const { updateProduct } = useContextSelector(ProductContext, (context) => {
     return context;
   });
-  const [ count, setCount ] = useState(0)
   const familyId = getCookie("familyId") ?? "";
 
   useEffect(() => {
@@ -83,11 +82,7 @@ export default function EditCard({ amount,category,cost,expiryProduct,handleOpen
       result.validity = date;
       
       setDefaultProductValue(result);
-      if(count > 0) {
-
-        handleOpen();
-      }
-      setCount(count + 1)
+      handleOpen();
     };
 
     fetchRepos();
@@ -95,56 +90,55 @@ export default function EditCard({ amount,category,cost,expiryProduct,handleOpen
 
   async function handleUpdateProduct() {
     const dateNow = new Date();
-
-    console.log(defaultProductValue);
-    if (name == "") {
-      setNameValue(defaultProductValue.name);
+    if (nameValue != "") {
+      defaultProductValue.name = nameValue
     }
-    if (type == "") {
-      setTypeValue(defaultProductValue.type);
+    if (typeValue != "") {
+      defaultProductValue.type = typeValue
     }
-    if (validity == "") {
-      setValidityValue(defaultProductValue.validity);
+    if (validityValue != "") {
+      defaultProductValue.validity = validityValue
     }
-    if (unitMeasure == "") {
-      setUnitMeasureValue(defaultProductValue.unitMeasure);
+    if (unitMeasureValue != "") {
+      defaultProductValue.unitMeasure = unitMeasureValue
     }
-    if (cost == "") {
-      setCostValue(defaultProductValue.cost);
+    if (costValue != "") {
+      defaultProductValue.cost = costValue
     }
-    if (String(amount) == "") {
-      setAmountValue(defaultProductValue.amount);
+    if (amountValue != "") {
+      defaultProductValue.amount = amountValue
     }
-
-    console.log(validity.charAt(2));
+console.log(validity)
     if (validity.charAt(2) == "/") {
       const [day, month, year] = validity.split("/");
       const dateValidity = new Date(+year, +month - 1, +day);
 
       if (dateValidity > dateNow) {
         setExpiryProductValue(false);
-        setValidityValue(dateValidity + "");
+        defaultProductValue.validity = dateValidity;
       } else {
         setExpiryProductValue(true);
+        defaultProductValue.validity = dateValidity;
       }
     }
     if (new Date(validity) > dateNow) {
       setExpiryProductValue(false);
+      defaultProductValue.validity = new Date(validity);
     } else {
       setExpiryProductValue(true);
+      defaultProductValue.validity = new Date(validity);
     }
-    console.log(validity);
     await updateProduct({
       id: defaultProductValue.id,
-      name,
-      amount: parseInt(amountValue),
-      category,
-      cost,
-      expiryProduct,
-      familyId,
-      type,
-      unitMeasure,
-      validity,
+      name:defaultProductValue.name,
+      amount: parseInt(defaultProductValue.amount),
+      category: categoryValue,
+      cost:defaultProductValue.cost,
+      expiryProduct:defaultProductValue.expiryProduct,
+      familyId:defaultProductValue.familyId,
+      type:defaultProductValue.type,
+      unitMeasure:defaultProductValue.unitMeasure,
+      validity:defaultProductValue.validity,
     });
     handleOpen();
   }

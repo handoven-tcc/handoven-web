@@ -23,7 +23,6 @@ export default function Favoritos({ plates }: PlateProps) {
 
     {
       plates.map((plate:IPlate) => {
-      console.log(plate)
         return (
           
           <CardFavorite key={plate.id} image={plate.image} name={plate.name} id={plate.id} category={plate.category}/>

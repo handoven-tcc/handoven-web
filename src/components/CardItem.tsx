@@ -21,7 +21,8 @@ interface CardProps {
 
 enum ColorCategory {
   "blue-500",
-  "slate-500",
+  // @ts-ignore
+  "lime-500",
   // @ts-ignore
   "gray-500",
   // @ts-ignore
@@ -31,6 +32,7 @@ enum ColorCategory {
   "gray-500",
   "amber-500",
   "yellow-500",
+  // @ts-ignore
   "lime-500",
   "orange-500",
   "teal-500",

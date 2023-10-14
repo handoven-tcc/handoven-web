@@ -521,7 +521,6 @@ export default function ReceitaPage() {
 export async function getServerSideProps({ req, res }: INextApi) {
   const token = getCookie("token", { req, res });
   const familyId = getCookie("familyId", { req, res });
-  console.log(token);
   if (token == undefined || familyId == undefined) {
     res.writeHead(302, { Location: "/login" });
     res.end();

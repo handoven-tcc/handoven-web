@@ -34,7 +34,6 @@ export const authOptions: NextAuthOptions = {
               "X-HandOven-User": "111111111111111111111111",
             },
           })
-        console.log(res)
         return res
       },
     }),
