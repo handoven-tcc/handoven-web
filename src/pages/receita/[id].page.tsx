@@ -119,6 +119,7 @@ export const getServerSideProps: GetServerSideProps = async ({query, req, res} )
   try {
   const plateId = String(query.id);
 
+
     const plate:any = await axios.get(
       "https://handovenapi.onrender.com/plates/" + plateId,
       {
@@ -136,7 +137,6 @@ export const getServerSideProps: GetServerSideProps = async ({query, req, res} )
     name: plate.data.name,
     image: plate.data.image,
     category: plate.data.category,
-    favorites: plate.data.favorited,
     section: plate.data.section
   }
     }

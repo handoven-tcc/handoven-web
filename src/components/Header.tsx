@@ -155,10 +155,10 @@ export function Header() {
             </Link>
 
             <Link
-              href=""
+              href="../favoritos"
               className="flex gap-2 hover:bg-gray-100 p-2 rounded-sm duration-300"
             >
-              <Heart size={20} color="#3c5654" /> Favoritas
+              <Heart size={20} color="#3c5654" /> Favoritos
             </Link>
 
             <Link

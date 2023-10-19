@@ -5,13 +5,12 @@ import CardFavorite from "../../components/CardFavorite";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import { IPlate } from "../../contexts/PlateContext";
+import { getCookie } from "cookies-next";
 
 
 interface PlateProps {
   plates: IPlate[]
 }
-
-
 
 export default function Favoritos({ plates }: PlateProps) {
   return(
@@ -38,21 +37,19 @@ export default function Favoritos({ plates }: PlateProps) {
 
 export const getServerSideProps: GetServerSideProps = async ({query, req, res} )  => {
   try {
-  const plateId = String(query.id);
+  const familyId = getCookie("familyId", { req, res });
 
-    const plates:any = await axios.post(
-      "https://handovenapi.onrender.com/plates/favorites",
-      {
-          favorited: true
-      },
+    const plates:any = await axios.get(
+      `https://handovenapi.onrender.com/favorites?familyId=${familyId}`,
       {
         headers: {
           "Content-type": "application/json",
-          "X-HandOven-Family":"111111111111111111111111",
+          "X-HandOven-Family": familyId,
           "X-HandOven-User":"111111111111111111111111",
         },
       }
       );
+      console.log(plates)
     return { props: {
   plates: plates.data
     }

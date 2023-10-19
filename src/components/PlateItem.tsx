@@ -1,9 +1,12 @@
 import { Button } from "@material-tailwind/react";
+import { getCookie } from "cookies-next";
 import { useKeenSlider } from "keen-slider/react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Heart } from "phosphor-react";
 import { useCallback, useState } from "react";
+import { useContextSelector } from "use-context-selector";
+import { FavoriteContext } from "../contexts/FavoriteCotext";
 
 interface IPlateItem {
   img: string;
@@ -18,9 +21,29 @@ function isDisabled(id: string) {
 }
 
 
-export function PlateItem({ img, name, id }: IPlateItem) {
 
-  const [ favorited, setFavorited ] = useState(false)
+export function PlateItem({ img, name, id }: IPlateItem) {
+  const { addFavorite, removeFavorite } = useContextSelector(
+    FavoriteContext,
+    (context) => {
+      return context;
+    }
+    );
+    
+      const [ favorited, setFavorited ] = useState(false)
+  const familyId = getCookie("familyId") ?? "";
+  
+  
+  async function addPlateInFavorited(plateId: string) {
+    await addFavorite(plateId, familyId)
+    setFavorited(true)
+  } 
+
+  async function removePlateInFavorited(plateId: string) {
+    await removeFavorite(plateId, familyId)
+    setFavorited(false)
+  } 
+
 
   return (
     <div>
@@ -43,11 +66,11 @@ export function PlateItem({ img, name, id }: IPlateItem) {
           {
             favorited ? (
               
-          <a className="cursor-pointer" onClick={() => (setFavorited(false))}>
+          <a className="cursor-pointer" onClick={() => (removePlateInFavorited(id))}>
           <Heart size={32} color="#d40b03" weight="fill" />
           </a>
             ) :     
-          <a className="cursor-pointer" onClick={() => (setFavorited(true))}>
+          <a className="cursor-pointer" onClick={() => (addPlateInFavorited(id))}>
           <Heart size={32} color="#d40b03"/>
           </a>
           }

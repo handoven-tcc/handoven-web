@@ -30,15 +30,18 @@ enum ColorCategory {
   "green-500",
   // @ts-ignore
   "gray-500",
-  "amber-500",
+  // @ts-ignore
+  "gray-500",
   "yellow-500",
   // @ts-ignore
   "lime-500",
   "orange-500",
-  "teal-500",
   // @ts-ignore
-  "rose-500",
+  "violet-500",
+  // @ts-ignore
   "sky-500",
+  // @ts-ignore
+  "indigo-500",
   // @ts-ignore
   "indigo-500",
   // @ts-ignore
@@ -53,6 +56,7 @@ enum ColorCategory {
   // @ts-ignore
   "fuchsia-500",
   "cyan-500",
+  // @ts-ignore
   "violet-500",
 }
 

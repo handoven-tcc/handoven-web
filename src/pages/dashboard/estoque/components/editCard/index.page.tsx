@@ -69,6 +69,7 @@ export default function EditCard({ amount,category,cost,expiryProduct,handleOpen
   const [amountValue, setAmountValue] = useState("");
   const [expiryProductValue, setExpiryProductValue] = useState(false);
   const [defaultProductValue, setDefaultProductValue] = useState<any>({});
+  const [ count, setCount ] = useState(0);
   const { updateProduct } = useContextSelector(ProductContext, (context) => {
     return context;
   });
@@ -82,7 +83,11 @@ export default function EditCard({ amount,category,cost,expiryProduct,handleOpen
       result.validity = date;
       
       setDefaultProductValue(result);
-      handleOpen();
+      if(count > 0) {
+
+        handleOpen();
+      }
+      setCount(count + 1)
     };
 
     fetchRepos();
