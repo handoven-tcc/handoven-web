@@ -77,75 +77,81 @@ const EditCard = ({
   const [defaultProductValue, setDefaultProductValue] = useState<any>({});
   const { getFamilyId } = useAuth();
   const { updateProduct } = useProducts();
+  const [ count, setCount ] = useState(0);
 
   useEffect(() => {
     const fetchRepos = async () => {
+
       const result = await setField();
       const date = result.validity.slice(0, 10).split("-").reverse().join("/");
       result.validity = date;
 
       setDefaultProductValue(result);
-      handleOpen();
+      if(count > 0) {
+
+        handleOpen();
+      }
+      setCount(count + 1)
     };
 
     fetchRepos();
   }, [name]);
 
+
   const handleUpdateProduct = async () => {
     const dateNow = new Date();
-
-    console.log(defaultProductValue);
-    if (name == "") {
-      setNameValue(defaultProductValue.name);
+    if (_nameValue != "") {
+      defaultProductValue.name = _nameValue
     }
-    if (type == "") {
-      setTypeValue(defaultProductValue.type);
+    if (_typeValue != "") {
+      defaultProductValue.type = _typeValue
     }
-    if (validity == "") {
-      setValidityValue(defaultProductValue.validity);
+    if (_validityValue != "") {
+      defaultProductValue.validity = _validityValue
     }
-    if (unitMeasure == "") {
-      setUnitMeasureValue(defaultProductValue.unitMeasure);
+    if (_unitMeasureValue != "") {
+      defaultProductValue.unitMeasure = _unitMeasureValue
     }
-    if (cost == "") {
-      setCostValue(defaultProductValue.cost);
+    if (_costValue != "") {
+      defaultProductValue.cost = _costValue
     }
-    if (String(amount) == "") {
-      setAmountValue(defaultProductValue.amount);
+    if (amountValue != "") {
+      defaultProductValue.amount = amountValue
     }
-
-    console.log(validity.charAt(2));
+console.log(validity)
     if (validity.charAt(2) == "/") {
       const [day, month, year] = validity.split("/");
       const dateValidity = new Date(+year, +month - 1, +day);
 
       if (dateValidity > dateNow) {
         setExpiryProductValue(false);
-        setValidityValue(dateValidity + "");
+        defaultProductValue.validity = dateValidity;
       } else {
         setExpiryProductValue(true);
+        defaultProductValue.validity = dateValidity;
       }
     }
     if (new Date(validity) > dateNow) {
       setExpiryProductValue(false);
+      defaultProductValue.validity = new Date(validity);
     } else {
       setExpiryProductValue(true);
+      defaultProductValue.validity = new Date(validity);
     }
-    const familyId = getFamilyId();
     await updateProduct({
       id: defaultProductValue.id,
-      name,
-      amount: parseInt(amountValue),
-      category,
-      cost,
-      expiryProduct,
-      familyId,
-      type,
-      unitMeasure,
-      validity,
+      name:defaultProductValue.name,
+      amount: parseInt(defaultProductValue.amount),
+      category: _categoryValue,
+      cost:defaultProductValue.cost,
+      expiryProduct:defaultProductValue.expiryProduct,
+      familyId:defaultProductValue.familyId,
+      type:defaultProductValue.type,
+      unitMeasure:defaultProductValue.unitMeasure,
+      validity:defaultProductValue.validity,
     });
     handleOpen();
-  };
+  }
 
   return (
     <Dialog open={open} handler={handleOpen}>
@@ -154,79 +160,84 @@ const EditCard = ({
         <div className="flex gap-2 flex-col ">
           <div className="flex gap-2">
             <Input
+            id="name"
               type="text"
               label="Nome do Produto"
               defaultValue={defaultProductValue.name}
-              color="black"
+              color="gray"
               size="lg"
               width={130}
               onChange={(e) => setNameValue(e.target.value)}
-              crossOrigin={undefined}
             />
 
             <Input
+            id="type"
               type="text"
               label="Tipo"
               defaultValue={defaultProductValue.type}
-              color="black"
+              color="gray"
               size="lg"
               width={130}
               onChange={(e) => setTypeValue(e.target.value)}
-              crossOrigin={undefined}
             />
           </div>
 
           <div className="flex gap-2">
             <Input
+            id="validate"
               type="text"
               label="Validade"
               defaultValue={defaultProductValue.validity}
-              color="black"
+              color="gray"
               size="lg"
               width={130}
               onChange={(e) => setValidityValue(e.target.value)}
-              crossOrigin={undefined}
             />
-            <Input
-              type="text"
-              label="Unidade de Medida"
-              defaultValue={defaultProductValue.unitMeasure}
-              color="black"
-              size="lg"
-              width={130}
-              onChange={(e) => setUnitMeasureValue(e.target.value)}
-              crossOrigin={undefined}
-            />
+            <Select label="Unidadede Medida" color="gray" className="text-black" id="measure">
+            <Option onClick={() => setUnitMeasureValue("Copos")}>Copos</Option>
+            <Option onClick={() => setUnitMeasureValue("Colher de sopa")}>Colher de sopa</Option>
+            <Option onClick={() => setUnitMeasureValue("Colher de chá")}>Colher de chá</Option>
+            <Option onClick={() => setUnitMeasureValue("Fatias")}>Fatias</Option>
+            <Option onClick={() => setUnitMeasureValue("Gramas")}>Gramas</Option>
+            <Option onClick={() => setUnitMeasureValue("Litros")}>Litros</Option>
+            <Option onClick={() => setUnitMeasureValue("Miligramas")}>Miligramas</Option>
+            <Option onClick={() => setUnitMeasureValue("Mililitros")}>Mililitros</Option>
+            <Option onClick={() => setUnitMeasureValue("Pitada")}>Pitada</Option>
+            <Option onClick={() => setUnitMeasureValue("Quilogramas")}>Quilogramas</Option>
+            <Option onClick={() => setUnitMeasureValue("Xícaras")}>Xícaras</Option>
+            <Option onClick={() => setUnitMeasureValue("Unidades")}>Unidades</Option>
+          </Select>
           </div>
 
           <div className="flex gap-2">
             <Input
+            id="cost"
               type="text"
               label="Custo"
-              color="black"
+              color="gray"
               defaultValue={defaultProductValue.cost}
               size="lg"
               width={130}
               // icon={<LockKey />}
               onChange={(e) => setCostValue(e.target.value)}
-              crossOrigin={undefined}
             />
             <Input
+            id="quantity"
               type="text"
               label="Quantidade"
-              color="black"
+              color="gray"
               defaultValue={defaultProductValue.amount}
               size="lg"
               width={130}
               // icon={<LockKey />}
               onChange={(e) => setAmountValue(e.target.value)}
-              crossOrigin={undefined}
             />
           </div>
 
           <Select
             label="Categoria"
             color="gray"
+            id="category"
             className="text-black"
             defaultValue={Category[category]}
           >
@@ -267,6 +278,7 @@ const EditCard = ({
         <button
           className="p-3 bg-green-500 text-white rounded-md flex items-center gap-1 hover:bg-green-300"
           onClick={handleUpdateProduct}
+          id="editProduct"
         >
           <span>Confirmar</span>
         </button>

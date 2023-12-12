@@ -39,7 +39,7 @@ const Register = () => {
     try {
       const [day, month, year] = birthDate.split("/");
       const date = new Date(+year, +month - 1, +day).toISOString();
-      let completeName = name + " " + surname;
+      const completeName = name + " " + surname;
       setMessage("Erro ao criar familia");
 
       const request = new UserRequest(
@@ -157,10 +157,11 @@ const Register = () => {
                 <div className="w-[14rem] md:w-[20rem]">
                   <Input
                     label="Nome"
+                    id="name"
                     color="red"
                     size="lg"
                     width={130}
-                    icon={<User />}
+                    icon={<User color="black"/>}
                     onChange={(e) => setName(e.target.value)}
                     crossOrigin={undefined}
                   />
@@ -168,10 +169,11 @@ const Register = () => {
                 <div className="w-[14rem]  md:w-[20rem] pt-4">
                   <Input
                     label="Sobrenome"
+                    id="last_name"
                     color="red"
                     size="lg"
                     width={130}
-                    icon={<User />}
+                    icon={<User color="black"/>}
                     onChange={(e) => setSurname(e.target.value)}
                     crossOrigin={undefined}
                   />
@@ -179,10 +181,11 @@ const Register = () => {
                 <div className="w-[14rem]  md:w-[20rem] pt-4">
                   <Input
                     label="Nome da familia"
+                    id="family_name"
                     color="red"
                     size="lg"
                     width={130}
-                    icon={<UsersThree />}
+                    icon={<UsersThree color="black"/>}
                     onChange={(e) => setFamilyName(e.target.value)}
                     crossOrigin={undefined}
                   />
@@ -190,10 +193,11 @@ const Register = () => {
                 <div className="w-[14rem]  md:w-[20rem] pt-4">
                   <Input
                     label="E-mail"
+                    id="email"
                     color="red"
                     size="lg"
                     width={130}
-                    icon={<EnvelopeSimple />}
+                    icon={<EnvelopeSimple color="black"/>}
                     onChange={(e) => setEmail(e.target.value)}
                     crossOrigin={undefined}
                   />
@@ -204,9 +208,10 @@ const Register = () => {
                   <Input
                     label="Celular"
                     color="red"
+                    type="tel"
                     size="lg"
                     width={130}
-                    icon={<DeviceMobile />}
+                    icon={<DeviceMobile color="black"/>}
                     onChange={(e) => setCell(e.target.value)}
                     crossOrigin={undefined}
                   />
@@ -215,10 +220,11 @@ const Register = () => {
                 <div className="w-[14rem] md:w-[20rem] pt-4">
                   <Input
                     label="Data de Nascimento"
+                    id="data"
+                    type="date"
                     color="red"
                     size="lg"
                     width={130}
-                    icon={<Calendar />}
                     onChange={(e) => setBirthDate(e.target.value)}
                     crossOrigin={undefined}
                   />
@@ -228,10 +234,11 @@ const Register = () => {
                   <Input
                     type="Password"
                     label="Senha"
+                    id="pass"
                     color="red"
                     size="lg"
                     width={130}
-                    icon={<LockKey />}
+                    icon={<LockKey color="black"/>}
                     onChange={(e) => setPassword(e.target.value)}
                     crossOrigin={undefined}
                   />
@@ -243,7 +250,7 @@ const Register = () => {
                     color="red"
                     size="lg"
                     width={130}
-                    icon={<LockKey />}
+                    icon={<LockKey color="black"/>}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     crossOrigin={undefined}
                   />
@@ -275,6 +282,7 @@ const Register = () => {
                 type="submit"
                 className="text-white block w-[472px] h-[50px] md:w-[420px] rounded-lg outline-none border-none bg-gradient-to-r from-red-500 to-yellow-500 bg-200% text-lg color-white font-default mt-6 md:mt-2 cursor-pointer transition-[0.5s] hover:bg-right"
                 value="CADASTRAR"
+                id="register"
                 onClick={() => {
                   setMessage("");
                   setOpen(false);

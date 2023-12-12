@@ -43,9 +43,9 @@ const CreateCard = (req: createCardProps) => {
       amount != ""
     ) {
       const [day, month, year] = validity.split("/");
-      let dateValidity = new Date(+year, +month - 1, +day);
-      let date = dateValidity + "";
-      let dateNow = new Date();
+      const dateValidity = new Date(+year, +month - 1, +day);
+      const date = dateValidity + "";
+      const dateNow = new Date();
 
       if (dateValidity > dateNow) {
         setExpiryProduct(false);
@@ -75,6 +75,7 @@ const CreateCard = (req: createCardProps) => {
           <div className="flex gap-2">
             <Input
               type="text"
+              id="name"
               label="Nome do Produto"
               color="black"
               size="lg"
@@ -84,6 +85,7 @@ const CreateCard = (req: createCardProps) => {
             />
             <Input
               type="text"
+              id="type"
               label="Tipo"
               color="black"
               size="lg"
@@ -96,6 +98,7 @@ const CreateCard = (req: createCardProps) => {
           <div className="flex gap-2">
             <Input
               type="text"
+              id="validate"
               label="Validade"
               color="black"
               size="lg"
@@ -103,21 +106,27 @@ const CreateCard = (req: createCardProps) => {
               onChange={(e) => setValidity(e.target.value)}
               crossOrigin={undefined}
             />
-            <Input
-              type="text"
-              label="Unidade de Medida"
-              color="black"
-              size="lg"
-              width={130}
-              onChange={(e) => setUnitMeasure(e.target.value)}
-              crossOrigin={undefined}
-            />
+            <Select label="Unidadede Medida" color="gray" className="text-black" id="measure">
+            <Option id="Copos" onClick={() => setUnitMeasure("Copos")}>Copos</Option>
+            <Option id="sopa" onClick={() => setUnitMeasure("Colher de sopa")}>Colher de sopa</Option>
+            <Option id="cha" onClick={() => setUnitMeasure("Colher de chá")}>Colher de chá</Option>
+            <Option id="fatia" onClick={() => setUnitMeasure("Fatias")}>Fatias</Option>
+            <Option id="grama" onClick={() => setUnitMeasure("Gramas")}>Gramas</Option>
+            <Option id="litros" onClick={() => setUnitMeasure("Litros")}>Litros</Option>
+            <Option id="miligramas" onClick={() => setUnitMeasure("Miligramas")}>Miligramas</Option>
+            <Option id="mililitros" onClick={() => setUnitMeasure("Mililitros")}>Mililitros</Option>
+            <Option id="pitada" onClick={() => setUnitMeasure("Pitada")}>Pitada</Option>
+            <Option id="quilogramas" onClick={() => setUnitMeasure("Quilogramas")}>Quilogramas</Option>
+            <Option id="xicaras" onClick={() => setUnitMeasure("Xícaras")}>Xícaras</Option>
+            <Option id="unidade" onClick={() => setUnitMeasure("Unidades")}>Unidades</Option>
+          </Select>
           </div>
 
           <div className="flex gap-2">
             <Input
               type="text"
               label="Custo"
+              id="cost"
               color="black"
               size="lg"
               width={130}
@@ -128,6 +137,7 @@ const CreateCard = (req: createCardProps) => {
             <Input
               type="text"
               label="Quantidade"
+              id="quantity"
               color="black"
               size="lg"
               width={130}
@@ -137,7 +147,7 @@ const CreateCard = (req: createCardProps) => {
             />
           </div>
 
-          <Select label="Categoria" color="gray" className="text-black">
+          <Select label="Categoria" color="gray" className="text-black" id="category">
             <Option onClick={() => setCategory(0)}>Outros</Option>
             <Option onClick={() => setCategory(1)}>Açúcares</Option>
             <Option onClick={() => setCategory(2)}>Bebidas</Option>
@@ -174,6 +184,7 @@ const CreateCard = (req: createCardProps) => {
         </Button>
         <button
           className="p-3 bg-green-500 text-white rounded-md flex items-center gap-1 hover:bg-green-300"
+          id="createProduct"
           onClick={handleCreateProduct}
         >
           <span>Confirmar</span>

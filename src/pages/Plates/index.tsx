@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import Header from "../../components/Header";
 import PlateItem from "./Components/PlateItem";
 import { usePlates } from "../../providers/Plates";
+import { useAlgorithm } from "../../providers/Augorithm";
+import { useAuth } from "../../providers/Auth";
 
 const Plates = () => {
   const {
@@ -28,14 +30,14 @@ const Plates = () => {
   const [sliderRefSobremesa] = useKeenSlider({
     loop: true,
     slides: {
-      perView: 16,
+      perView: 8,
       spacing: 10,
     },
   });
   const [sliderRefSalada] = useKeenSlider({
     loop: true,
     slides: {
-      perView: 8,
+      perView: 10,
       spacing: 10,
     },
   });
@@ -123,12 +125,24 @@ const Plates = () => {
       spacing: 10,
     },
   });
+  const [sliderRefAlgorithm] = useKeenSlider({
+    loop: true,
+    slides: {
+      perView: 8,
+      spacing: 10,
+    },
+  });
+  const { getFamilyId } = useAuth();
+
+  const { findPlatesPossibilityByFamily, platesPossibility} = useAlgorithm();
 
   useEffect(() => {
     (async () => {
-      await getPlates();
+      getPlates();
+      findPlatesPossibilityByFamily(getFamilyId());
     })();
   }, []);
+
 
   return (
     <div className="">
@@ -148,42 +162,56 @@ const Plates = () => {
             />
           </div>
         </div>
+
         <div className="flex flex-col items-start justify-center">
-          {sobremesas && sobremesas.length ? (
+          {platesPossibility && platesPossibility.length ? (
             <div>
               {" "}
               <h2 className="text-xl text-yellow-500 font-default mt-4">
-                <strong>Sobremesa</strong>
+                <strong>Receitas Possiveis</strong>
               </h2>
             </div>
           ) : null}
-          <div ref={sliderRefSobremesa} className="keen-slider flex">
-            {sobremesas && sobremesas.length > 0
-              ? sobremesas.map((sobremesa, index) => (
+            <div>
+            {platesPossibility && platesPossibility.length > 0
+              ? platesPossibility.map((plates, index) => (
                   // eslint-disable-next-line react/jsx-key
                   <div className="keen-slider__slide  mt-2 flex flex-col self-start rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
                     <PlateItem
                       key={index}
-                      img={sobremesa.image}
-                      name={sobremesa.name}
-                      id={sobremesa.id + ""}
+                      img={plates.plate.image}
+                      name={plates.plate.name}
+                      id={plates.plate._id + ""}
                     />
                   </div>
                 ))
               : null}
-            {sobremesas && sobremesas.length > 0
-              ? sobremesas.map((sobremesa, index) => (
-                  // eslint-disable-next-line react/jsx-key
-                  <div className="keen-slider__slide  mt-2 flex flex-col self-start rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
-                    <PlateItem
-                      key={index}
-                      img={sobremesa.image}
-                      name={sobremesa.name}
-                      id={sobremesa.id + ""}
-                    />
-                  </div>
-                ))
-              : null}
+          </div>
+          </div>
+          <div className="flex flex-col items-start justify-center pt-2">
+            {sobremesas && sobremesas.length > 0 ? (
+              <div>
+                {" "}
+                <h2 className="text-xl text-yellow-500 font-default mt-4">
+                  <strong>Sobremesas</strong>
+                </h2>
+              </div>
+            ) : null}
+            <div ref={sliderRefSobremesa} className="keen-slider flex">
+              {sobremesas && sobremesas.length > 0
+                ? sobremesas.map((sobremesa, index) => (
+                    // eslint-disable-next-line react/jsx-key
+                    <div className="keen-slider__slide  mt-2 flex flex-col self-start rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
+                      <PlateItem
+                        key={index}
+                        img={sobremesa.image}
+                        name={sobremesa.name}
+                        id={sobremesa.id ?? ""}
+                      />
+                    </div>
+                  ))
+                : null}
+            </div>
           </div>
           <div className="flex flex-col items-start justify-center pt-2">
             {saladas && saladas.length > 0 ? (
@@ -351,7 +379,6 @@ const Plates = () => {
                 ))
               : null}
           </div>
-        </div>
         <div className="flex flex-col items-start justify-center pt-2">
           {massas && massas.length > 0 ? (
             <div>
@@ -464,7 +491,6 @@ const Plates = () => {
           <div ref={sliderRefAperitivos} className="keen-slider flex">
             {aperitivos && aperitivos.length > 0
               ? aperitivos.map((aperitivo, index) => (
-                  // eslint-disable-next-line react/jsx-key
                   <div className="keen-slider__slide  mt-2 flex flex-col self-start rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
                     <PlateItem
                       key={index}
@@ -489,7 +515,6 @@ const Plates = () => {
           <div ref={sliderRefVegetarianas} className="keen-slider flex">
             {vegetarianas && vegetarianas.length > 0
               ? vegetarianas.map((vegetariana, index) => (
-                  // eslint-disable-next-line react/jsx-key
                   <div className="keen-slider__slide  mt-2 flex flex-col self-start rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 sm:shrink-0 sm:grow sm:basis-0">
                     <PlateItem
                       key={index}

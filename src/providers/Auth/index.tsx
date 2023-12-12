@@ -13,12 +13,13 @@ interface IAuthProviderProps {
 }
 
 interface IAuthProviderData {
-  login: (request: LoginRequest) => void;
+  login: (request: LoginRequest) => Promise<any[]>;
   createUser: (request: UserRequest) => void;
   logout: () => void;
   isAdminUser: () => boolean;
   isAuthenticatedUser: () => boolean;
   getToken: () => string;
+  getName: () => string;
   getEmail: () => string;
   getUserId: () => string;
   getFamilyId: () => string;
@@ -79,11 +80,13 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
       window.localStorage.setItem("familyId", data.familyId);
       window.localStorage.setItem("token", "token");
       window.localStorage.setItem("email", data.email);
+      window.localStorage.setItem("name", data.name);
       setIsLoadingAuth(false);
     } catch (error) {
       console.error(error);
       setIsLoadingAuth(false);
     }
+    return data;
   };
 
   const createUser = async (request: UserRequest) => {
@@ -108,6 +111,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
       window.localStorage.setItem("familyId", data.familyId);
       window.localStorage.setItem("email", data.email);
       window.localStorage.setItem("token", "token");
+      window.localStorage.setItem("name", data.name);
       setIsLoadingAuth(false);
     } catch (error) {
       console.error(error);
@@ -149,8 +153,8 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     window.localStorage.removeItem("familyId");
     window.localStorage.removeItem("token");
     window.localStorage.removeItem("email");
+    window.localStorage.removeItem("name");
   };
-
   const getEmail = (): string => {
     return window.localStorage.getItem("email") as string;
   };
@@ -162,6 +166,10 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
   const getUserId = (): string => {
     return window.localStorage.getItem("userId") as string;
   };
+
+  const getName = (): string => {
+    return window.localStorage.getItem("name") as string;
+  }
 
   const getFamilyId = (): string => {
     return window.localStorage.getItem("familyId") as string;
@@ -198,6 +206,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
         setToken,
         isAuthenticatedUser,
         api,
+        getName
       }}
     >
       {children}

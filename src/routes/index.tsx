@@ -11,6 +11,7 @@ import Products from "../pages/Products";
 import ProductsId from "../pages/ProductsId";
 import Dashboard from "../pages/Dashboard";
 import Profile from "../pages/Profile";
+import Favoritos from "../pages/Favoritos/index.page";
 
 const Router = () => {
   return (
@@ -30,6 +31,7 @@ const Router = () => {
           <Route path="/estoque/:id" element={<ProductsId />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/perfil" element={<Profile />} />
+          <Route path="/favoritos" element={<Favoritos/>} />
         </Route>
       </Route>
     </Routes>

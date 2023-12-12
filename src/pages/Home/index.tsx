@@ -15,6 +15,7 @@ const Home = () => {
         <a
           onClick={() => navigate("/receitas")}
           className="w-[420px] h-[350px] flex items-center justify-center justify-items-center flex-col border-gray-300 border p-5 rounded-lg hover:shadow-3xl "
+          id="receita"
         >
           <img src={receita} alt="" width={200} height={700} className="pt-8" />
 
@@ -27,6 +28,7 @@ const Home = () => {
         <a
           onClick={() => navigate("/estoque")}
           className="w-[420px] h-[350px] flex items-center justify-center justify-items-center flex-col border-gray-300 border p-5 rounded-lg hover:shadow-3xl "
+          id="estoque"
         >
           <img src={estoque} alt="" width={170} height={150} />
 
@@ -39,6 +41,7 @@ const Home = () => {
         <a
           onClick={() => navigate("/dashboard")}
           className=" w-[420px] h-[350px] flex items-center justify-center justify-items-center flex-col border-gray-300 border p-5 rounded-lg hover:shadow-3xl "
+          id="relatorio"
         >
           <img
             src={relatorio}

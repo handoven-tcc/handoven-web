@@ -20,7 +20,7 @@ interface CardProps {
 
 enum ColorCategory {
   "blue-500",
-  "slate-500",
+  "blue-500",
   // @ts-ignore
   "gray-500",
   // @ts-ignore
@@ -34,7 +34,7 @@ enum ColorCategory {
   "orange-500",
   "teal-500",
   // @ts-ignore
-  "rose-500",
+  "brown-500",
   "sky-500",
   // @ts-ignore
   "indigo-500",
@@ -77,6 +77,8 @@ enum Category {
   Fungo,
   "Proteína",
 }
+
+
 
 const CardItem = ({
   unitMeasure,
@@ -185,6 +187,7 @@ const CardItem = ({
                 <Button
                   color="red"
                   className="p-3 rounded-md flex justify-center items-center"
+                  id="trash"
                   onClick={HandleDeleteProduct}
                 >
                   <Trash size={16} color="#fff" weight="bold" />
@@ -197,6 +200,7 @@ const CardItem = ({
                 <Button
                   color="orange"
                   className="p-3 rounded-md flex justify-center items-center "
+                  id={type}
                   onClick={async () =>
                     await handleOpenEdit({
                       id: id,
@@ -221,6 +225,7 @@ const CardItem = ({
                   className="p-3 rounded-md flex justify-center items-center transition duration-300"
                   color="red"
                   onClick={HandleDeleteProduct}
+                  id={name}
                 >
                   <Trash size={16} color="#fff" weight="bold" />
                 </Button>

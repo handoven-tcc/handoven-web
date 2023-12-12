@@ -77,55 +77,55 @@ const Products = () => {
 
   return (
     <div>
-      <Header />
-      <div className="flex item-center justify-center gap-4 p-6">
-        <div className="grid grid-cols-5 gap-2">
-          {products.length > 0 ? (
-            products.map((product) => (
-              // eslint-disable-next-line react/jsx-key
-              <CardItem
-                unitMeasure={product.unitMeasure}
-                type={product.type}
-                name={product.name}
-                validity={product.validity}
-                expiryProduct={product.expiryProduct}
-                category={product.category}
-                cost={product.cost}
-                amount={product.amount}
-                id={product.id}
-                openEdit={openEdit}
-                handleOpenEdit={handleEditInformation}
-              />
-            ))
-          ) : (
-            <span>não ha produtos em seu estoque</span>
-          )}
-        </div>
+    <Header />
+    <div className="flex item-center justify-center gap-4 p-6">
+      <div className="grid grid-cols-5 gap-2">
+        {products.length > 0 ? (
+          products.map((product) => (
+            <CardItem
+              unitMeasure={product.unitMeasure}
+              type={product.type}
+              name={product.name}
+              validity={product.validity}
+              expiryProduct={product.expiryProduct}
+              category={product.category}
+              cost={product.cost}
+              amount={product.amount}
+              id={product.id}
+              openEdit={openEdit}
+              handleOpenEdit={handleEditInformation}
+            />
+          ))
+        ) : (
+          <span>não ha produtos em seu estoque</span>
+        )}
       </div>
-      <div className="left-2 absolute bottom-2">
-        <button
-          className="p-3 bg-green-500 text-white rounded-md flex items-center gap-1"
-          onClick={handleOpen}
-        >
-          Criar <Plus size={18} color="#fff" weight="bold" />
-        </button>
-      </div>
-      <CreateCard open={open} handleOpen={handleOpen} />
-      <EditCard
-        amount={parseFloat(amount)}
-        category={category}
-        cost={cost}
-        open={openEdit}
-        handleOpen={handleOpenEdit}
-        expiryProduct={expiryProduct}
-        name={name}
-        id={id}
-        type={type}
-        unitMeasure={unitMeasure}
-        validity={validity}
-        setField={addProductInField}
-      />
     </div>
+    <div className="top-2 absolute right-1/3">
+      <button
+        className="p-3 bg-red-500 text-white rounded-md flex hover:bg-red-700 items-center gap-1"
+        onClick={handleOpen}
+        id="criar"
+      >
+        Criar <Plus size={18} color="#fff" weight="bold" />
+      </button>
+    </div>
+    <CreateCard open={open} handleOpen={handleOpen} />
+    <EditCard
+      amount={parseFloat(amount)}
+      category={category}
+      cost={cost}
+      open={openEdit}
+      handleOpen={handleOpenEdit}
+      expiryProduct={expiryProduct}
+      name={name}
+      id={id}
+      type={type}
+      unitMeasure={unitMeasure}
+      validity={validity}
+      setField={addProductInField}
+    />
+  </div>
   );
 };
 

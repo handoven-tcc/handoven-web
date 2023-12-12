@@ -56,27 +56,15 @@ const Login = () => {
   const handleGuest = () => {
     setToken("token");
     navigate("/home");
-    // setCookie("token", "token", { maxAge: 60 * 60 * 24 });
   };
-
-  // async function handleConnectGoogle() {
-  //   await signIn("google");
-  // }
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
       const request = new LoginRequest(email, password);
-      await login(request);
-
-      // console.log("[LOGIN_RESPONSE]: ", response);
-
-      // if (response) {
-      //   setMessage("Login Concluido!");
-
-      //   // router.push("/home");
-      // }
+      const res = await login(request);
+      console.log(res);
     } catch (error) {
       setMessage("Email ou senha inválidos");
       console.log("[LOGIN_ERROR]: ", error);
@@ -153,7 +141,7 @@ const Login = () => {
               onOpenChange={setOpen}
             >
               <div className="flex flex-col">
-                <Alert className="bg-[#33b864]/10 text-[#33b864] border-l-4 border-[#33b864] rounded-none font-medium mr-[-10px]">
+                <Alert className="bg-gray-500/10 text-[#33b864] border-l-4 border-gray-500 rounded-none font-medium mr-[-10px]">
                   <Typography className="font-medium text-sm flex">
                     {message}
                     <Toast.Action
@@ -211,6 +199,7 @@ const Login = () => {
                     <Input
                       crossOrigin={undefined}
                       label="Email"
+                      type="email"
                       color="red"
                       size="lg"
                       width={130}
@@ -240,6 +229,7 @@ const Login = () => {
                       color="red"
                       defaultChecked
                       ripple={true}
+                      id="checkbox"
                       label={
                         <Typography
                           variant="small"
@@ -259,6 +249,7 @@ const Login = () => {
                     type="submit"
                     className="text-white block w-[320px] h-[50px] mt-2 rounded-lg outline-none border-none bg-gradient-to-r from-red-500 to-yellow-500 bg-200% text-lg color-white font-default cursor-pointer transition-[0.5s] hover:bg-right"
                     value="LOGIN"
+                    id="login"
                     onClick={() => {
                       setMessage("");
                       setOpen(false);

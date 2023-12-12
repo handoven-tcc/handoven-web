@@ -57,7 +57,7 @@ export const PlatesProvider = ({ children }: IPlatesProviderProps) => {
     setIsLoadingPlate(true);
     try {
       const { data }: AxiosResponse<IPlate[]> = await api.get(
-        `${url}plates`
+        `${url}/plates`
         // ,
         // {
         //   headers: {
@@ -92,7 +92,7 @@ export const PlatesProvider = ({ children }: IPlatesProviderProps) => {
   const getProductById = async (id: string): Promise<IPlate> => {
     setIsLoadingPlate(true);
     try {
-      const { data }: AxiosResponse<IPlate> = await api.get(`plates/${id}`);
+      const { data }: AxiosResponse<IPlate> = await api.get(`/plates/${id}`);
 
       setIsLoadingPlate(false);
       return data;

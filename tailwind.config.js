@@ -28,7 +28,7 @@ export default withMT({
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-      colors: {  
+      colors: {
         white: "#FFF",
         black: "#000",
         gray: {
@@ -39,6 +39,9 @@ export default withMT({
           500: "#8E8E8E",
           600: "#7C7D80",
           700: "#5C5C5C",
+        },
+        brown: {
+          500: "#674736"
         },
         yellow: {
           500: "#FFC42E",

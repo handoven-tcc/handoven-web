@@ -75,7 +75,7 @@ export const ProductsProvider = ({ children }: IProductsProviderProps) => {
   const deleteProduct = async (id: string) => {
     setIsLoadingProducts(true);
     try {
-      await api.delete(`product/${id}`);
+      await api.delete(`products/${id}`);
       findProductsByFamily();
       setIsLoadingProducts(false);
     } catch (error) {

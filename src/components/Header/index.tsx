@@ -7,20 +7,23 @@ import {
   Input,
 } from "@material-tailwind/react";
 import logo from "../../assets/logo.svg";
+import pessoa from "../../assets/interrogacao.png";
 import { BowlFood, Carrot } from "@phosphor-icons/react";
-import { FolderOpen, Gear, Heart, User, UsersThree } from "phosphor-react";
+import { FolderOpen, Gear, Heart, SignOut, User, UsersThree } from "phosphor-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../providers/Auth";
 
 const Header = () => {
   const navigate = useNavigate();
 
+  const { getName, getEmail, logout } = useAuth();
   const [openRight, setOpenRight] = React.useState(false);
 
   const openDrawerRight = () => setOpenRight(true);
   const closeDrawerRight = () => setOpenRight(false);
 
   return (
-    <div className="bg-white flex items-center justify-between px-10  shadow-lg">
+    <div className="bg-white flex items-center justify-between px-10 shadow-lg">
       <div className="flex items-center justify-center gap-2 py-2">
         <img
           src={logo}
@@ -51,6 +54,7 @@ const Header = () => {
           <a
             onClick={() => navigate("/receitas")}
             className="hover:text-gray-700 duration-300"
+            id="receita"
           >
             Receita
           </a>
@@ -81,7 +85,7 @@ const Header = () => {
           <Avatar
             size="md"
             alt="avatar"
-            src="https://github.com/mateussk83.png"
+            src={pessoa}
             className="rounded-full mx-[5px] w-full"
           />
         </button>
@@ -97,14 +101,14 @@ const Header = () => {
             <Avatar
               size="md"
               alt="avatar"
-              src="https://github.com/mateussk83.png"
+              src={pessoa}
             />
             <div className="pl-2 flex flex-col">
               <h2>
-                <strong>mateussk83</strong>
+                <strong>{getName()}</strong>
               </h2>
               <span className="text-gray-800 text-xs">
-                Mateus Garcia Santos
+                {getEmail()}
               </span>
             </div>
           </div>
@@ -141,7 +145,7 @@ const Header = () => {
             </a>
 
             <a
-              href=""
+              onClick={() => navigate("/favoritos")}
               className="flex gap-2 hover:bg-gray-100 p-2 rounded-sm duration-300"
             >
               <Heart size={20} color="#3c5654" /> Favoritas
@@ -179,6 +183,16 @@ const Header = () => {
             >
               <Gear size={20} color="#3c5654" /> Configuração
             </a>
+
+            <div className="flex h-full items-end pt-52 w-full ">
+
+            <a
+              className="flex gap-2 hover:bg-gray-100 p-2 duration-300 w-full rounded-sm"
+              onClick={() => { logout(), navigate("/login")}}
+              >
+              <SignOut size={20} color="#3c5654" /> Sair
+            </a>
+              </div>
           </div>
         </div>
       </Drawer>
