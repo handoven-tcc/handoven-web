@@ -81,7 +81,7 @@ const Header = () => {
           </Button>
         </div>
 
-        <button onClick={openDrawerRight} className="">
+        <button onClick={openDrawerRight} id="abrirModal" className="">
           <Avatar
             size="md"
             alt="avatar"
@@ -138,15 +138,9 @@ const Header = () => {
         <div className="px-4 flex flex-col gap-2">
           <div>
             <a
-              href=""
-              className="flex gap-2 hover:bg-gray-100 p-2 rounded-sm duration-300"
-            >
-              <User size={20} color="#3c5654" /> Seu Perfil
-            </a>
-
-            <a
               onClick={() => navigate("/favoritos")}
               className="flex gap-2 hover:bg-gray-100 p-2 rounded-sm duration-300"
+              id="favoritas"
             >
               <Heart size={20} color="#3c5654" /> Favoritas
             </a>
@@ -160,31 +154,12 @@ const Header = () => {
 
             <a
               href=""
-              className="flex gap-2 hover:bg-gray-100 p-2 rounded-sm duration-300"
+              className="flex gap-2 hover:bg-gray-100 p-2 rounded-sm mb-14 duration-300"
             >
               <Carrot size={20} color="#3c5654" /> Estoque
             </a>
 
-            <a
-              href=""
-              className="flex gap-2 hover:bg-gray-100 p-2 rounded-sm duration-300"
-            >
-              <FolderOpen size={20} color="#3c5654" /> Relatórios
-            </a>
-            <a
-              href=""
-              className="flex gap-2 hover:bg-gray-100 p-2 rounded-sm duration-300"
-            >
-              <UsersThree size={20} color="#3c5654" /> Família
-            </a>
-            <a
-              href=""
-              className="flex gap-2 hover:bg-gray-100 p-2 rounded-sm duration-300"
-            >
-              <Gear size={20} color="#3c5654" /> Configuração
-            </a>
-
-            <div className="flex h-full items-end pt-52 w-full ">
+            <div className="flex h-full items-end pt-80 w-full ">
 
             <a
               className="flex gap-2 hover:bg-gray-100 p-2 duration-300 w-full rounded-sm"

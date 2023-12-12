@@ -125,13 +125,6 @@ const Plates = () => {
       spacing: 10,
     },
   });
-  const [sliderRefAlgorithm] = useKeenSlider({
-    loop: true,
-    slides: {
-      perView: 8,
-      spacing: 10,
-    },
-  });
   const { getFamilyId } = useAuth();
 
   const { findPlatesPossibilityByFamily, platesPossibility} = useAlgorithm();

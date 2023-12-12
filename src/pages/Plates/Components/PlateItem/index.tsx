@@ -44,12 +44,13 @@ const PlateItem = ({ img, name, id }: IPlateItem) => {
         {
           favorited ? (
 
-        <a className="cursor-pointer" onClick={() => (removeFavorite(id, getFamilyId()), setFavorited(false))} id="removeFavorite">
-        <Heart size={32} color="#d40b03" weight="fill" />
+        <a className="cursor-pointer" onClick={() => (removeFavorite(id, getFamilyId()), setFavorited(false))} id={name} >
+        <Heart id={name} size={32} color="#d40b03" weight="fill" />
         </a>
           ) :
-        <a className="cursor-pointer" onClick={() => (addFavorite(id, getFamilyId()), setFavorited(true))} id="addFavorite">
-        <Heart size={32} color="#d40b03"/>
+        <a id={name} className="cursor-pointer" onClick={() => (addFavorite(id, getFamilyId()), setFavorited(true))}>
+        <Heart id={name} size={32} color="#d40b03"/>
+
         </a>
         }
       </div>
